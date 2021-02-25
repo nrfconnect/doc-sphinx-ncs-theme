@@ -1,0 +1,16 @@
+{# Add rst-badge after rst-versions for small badge style. #}
+{%- if theme_versions %}
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> {{ project }}</span>
+       <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      {%- for name, title in theme_versions.items() %}
+      <div class="rst-other-version {{ name }}">
+        <a href="{{ pathto('', 1) }}../{{ name }}/index.html">{{ title }}</a>
+      </div>
+      {%- endfor %}
+    </div>
+  </div>
+{%- endif %}
