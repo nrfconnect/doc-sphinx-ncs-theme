@@ -17,7 +17,6 @@ jobs:
       - name: Package
         run: |
           pip install wheel
-          python setup.py sdist
           python setup.py bdist_wheel
 
       - name: Publish package
