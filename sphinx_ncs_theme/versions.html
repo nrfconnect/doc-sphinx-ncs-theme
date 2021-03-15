@@ -8,7 +8,9 @@
     <div class="rst-other-versions">
       {%- for name, title in theme_versions.items() %}
       <div class="rst-other-version {{ name }}">
-        <a href="{{ pathto('', 1) }}../{{ name }}/index.html">{{ title }}</a>
+        {# FIXME: nrfxlib uses 'README' as master_doc #}
+        {%- set master_doc = "README" if name == "nrfxlib" else "index" %}
+        <a href="{{ pathto('', 1) }}../{{ name }}/{{ master_doc }}.html">{{ title }}</a>
       </div>
       {%- endfor %}
     </div>
