@@ -1,6 +1,10 @@
 /* import sphinx-rtd-theme stylesheet */
 @import "theme.css";
 
+:root {
+  --docset-color: #2980b9;
+}
+
 /* make the page width fill the window */
 .wy-nav-content {
    max-width: none;
@@ -260,4 +264,33 @@ div.numbered-step>h6::before {
 /* fix styling for line blocks in tables */
 .rst-content td .line-block {
    margin-bottom: 0px;
+}
+
+/* theme colorization (override --docset-color) */
+.wy-side-nav-search {
+  background-color: var(--docset-color);
+}
+
+.rst-versions .rst-current-version {
+  background-color: var(--docset-color);
+}
+
+.wy-menu-vertical a {
+  color: var(--docset-color);
+}
+
+.wy-menu-vertical li.on a,
+.wy-menu-vertical li.current > a {
+  color: var(--docset-color);
+}
+
+.wy-menu-vertical li.current a {
+  color: var(--docset-color);
+}
+
+div.numbered-step > h2::before,
+div.numbered-step > h3::before,
+div.numbered-step > h4::before,
+div.numbered-step > h5::before {
+  background: var(--docset-color);
 }
