@@ -7,7 +7,9 @@
     </span>
     <div class="rst-other-versions">
       {%- for name, title in theme_versions.items() %}
-      <div class="rst-other-version {{ name }}">
+      {# FIXME: nrf uses 'ncs' as CSS class, others just the name #}
+      {%- set css_class = "ncs" if name == "nrf" else name %}
+      <div class="rst-other-version {{ css_class }}">
         {# FIXME: nrfxlib uses 'README' as master_doc #}
         {%- set master_doc = "README" if name == "nrfxlib" else "index" %}
         <a href="{{ pathto('', 1) }}../{{ name }}/{{ master_doc }}.html">{{ title }}</a>
