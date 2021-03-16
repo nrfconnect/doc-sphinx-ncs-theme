@@ -76,28 +76,6 @@ h6 {
  font-size: 90%;
 }
 
-
-/* Background colors for the different sets */
-.ncs {
- background-color: #00a9ce;
-}
-.zephyr {
- background-color: #a67dfb;
-}
-.mcuboot {
- background-color: #159957;
-}
-.nrfxlib {
- background-color: #ff9933;
-}
-.nrfx {
- background-color: #412ee8;
-}
-.kconfig {
- background-color: #e82424
-}
-
-
 /* footer */
 footer table {
  width: 100%;
@@ -161,7 +139,7 @@ div#version_status {
 /* numbered steps */
 
 div.numbered-step>h2::before, div.numbered-step>h3::before, div.numbered-step>h4::before, div.numbered-step>h5::before {
-  background: #cccccc;
+  background: var(--docset-color);
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
   -webkit-border-radius: 0.8em;
@@ -293,4 +271,19 @@ div.numbered-step > h3::before,
 div.numbered-step > h4::before,
 div.numbered-step > h5::before {
   background: var(--docset-color);
+}
+
+/*  make .. hlist:: tables fill the page */
+table.hlist {
+  width: 95% !important;
+}
+
+/* override rtd theme white-space no-wrap in table heading and content  */
+th,td {
+  white-space: normal !important;
+}
+
+/* overriding the positioning of the doc set switcher */
+.rst-versions {
+  position: fixed !important;
 }
