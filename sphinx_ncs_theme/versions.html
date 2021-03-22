@@ -6,13 +6,11 @@
        <span class="fa fa-caret-down"></span>
     </span>
     <div class="rst-other-versions">
-      {%- for name, title in theme_versions.items() %}
+      {%- for name, config in theme_versions.items() %}
       {# FIXME: nrf uses 'ncs' as CSS class, others just the name #}
       {%- set css_class = "ncs" if name == "nrf" else name %}
       <div class="rst-other-version {{ css_class }}">
-        {# FIXME: nrfxlib uses 'README' as master_doc #}
-        {%- set master_doc = "README" if name == "nrfxlib" else "index" %}
-        <a href="{{ pathto('', 1) }}../{{ name }}/{{ master_doc }}.html">{{ title }}</a>
+        <a href="{{ pathto('', 1) }}../{{ name }}/{{ config[1] }}.html">{{ config[0] }}</a>
       </div>
       {%- endfor %}
     </div>
