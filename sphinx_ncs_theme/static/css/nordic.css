@@ -283,7 +283,13 @@ th,td {
   white-space: normal !important;
 }
 
-/* overriding the positioning of the doc set switcher */
+/* overriding the positioning and background of the doc set switcher */
 .rst-versions {
   position: fixed !important;
+  background: none;
+}
+
+/* only show vertical scrollbar if needef on the doc set switcher */
+.rst-versions.shift-up {
+  overflow-y: auto;
 }
