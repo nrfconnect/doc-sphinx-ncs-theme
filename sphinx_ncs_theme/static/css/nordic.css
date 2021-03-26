@@ -284,9 +284,15 @@ div.numbered-step > h5::before {
   background: var(--docset-color);
 }
 
+/* put the table caption at the bottom, as done for figures */
+table {
+  caption-side: bottom;
+}
+
 /*  make .. hlist:: tables fill the page */
 table.hlist {
   width: 95% !important;
+  table-layout: fixed;
 }
 
 /* override rtd theme white-space no-wrap in table heading and content  */
@@ -324,4 +330,12 @@ kbd {
   margin: 0 0.1em;
   padding: 0.1em 0.6em;
   text-shadow: 0 1px 0 #fff;
+}
+
+/* add a class for multi-column support in docs to replace use of .hlist with
+ * a .. rst-class:: rst-columns
+ */
+
+.rst-columns {
+  column-width: 18em;
 }
