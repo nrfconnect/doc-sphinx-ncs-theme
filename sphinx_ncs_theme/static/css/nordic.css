@@ -339,3 +339,12 @@ kbd {
 .rst-columns {
   column-width: 18em;
 }
+
+/* add support for lists with roman numbering */
+
+.rst-content ol.lowerroman li {
+  list-style: lower-roman;
+}
+.rst-content ol.upperroman li {
+  list-style: upper-roman;
+}
