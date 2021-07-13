@@ -103,6 +103,36 @@ footer table {
 .rst-content dl.class p.breathe-sectiondef-title {
   display: none !important;
 }
+
+.rst-content dl:not(.docutils) .sig-param,
+.rst-content dl:not(.docutils).class dt > code,
+.rst-content dl:not(.docutils).function dt > code,
+.rst-content dl:not(.docutils).method dt > code {
+    padding: 0 4px !important;
+}
+
+.rst-content dl:not(.docutils) .sig-param,
+.rst-content dl:not(.docutils).class dt > em,
+.rst-content dl:not(.docutils).function dt > em,
+.rst-content dl:not(.docutils).method dt > em {
+    padding: 0 4px !important;
+}
+
+.rst-content dl:not(.docutils).c.var .pre {
+  padding-right: 4px;
+}
+
+.rst-content dl:not(.docutils).c.type a.reference.internal .pre
+{
+  padding-right: 4px !important;
+}
+
+
+.rst-content dl.c.struct .property {
+  padding-right: 4px !important;
+}
+
+
 .rst-content dl.group {
   margin: 0 0 12px 0px;
 }
