@@ -15,6 +15,22 @@
   color: #fff;
 }
 
+a.reference.internal[href^="#config-"] {
+  color: #404040;
+  font-weight: 700;
+  font-size: 75%;
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
+  border: 1px solid #e1e4e5;
+}
+
+a.reference.internal[href="#sample-config"] {
+  color: #404040;
+  font-weight: 700;
+  font-size: 75%;
+  font-family: SFMono-Regular,Menlo,Monaco,Consolas,Liberation Mono,Courier New,Courier,monospace;
+  border: 1px solid #e1e4e5;
+}
+
 /* Set background and border for navigation pane */
 .wy-nav-side {
   background: #fafafa;
@@ -108,14 +124,14 @@ footer table {
 .rst-content dl:not(.docutils).class dt > code,
 .rst-content dl:not(.docutils).function dt > code,
 .rst-content dl:not(.docutils).method dt > code {
-    padding: 0 4px !important;
+  padding: 0 4px !important;
 }
 
 .rst-content dl:not(.docutils) .sig-param,
 .rst-content dl:not(.docutils).class dt > em,
 .rst-content dl:not(.docutils).function dt > em,
 .rst-content dl:not(.docutils).method dt > em {
-    padding: 0 4px !important;
+  padding: 0 4px !important;
 }
 
 .rst-content dl:not(.docutils).c.var .pre {
@@ -127,6 +143,19 @@ footer table {
   padding-right: 4px !important;
 }
 
+.rst-content div[id="configuration-options"] dl dt {
+  font-weight: 700;
+  margin-bottom: 12px;
+  display: table;
+  margin: 6px 0;
+  font-size: 90%;
+  line-height: normal;
+  background: #e7f2fa;
+  color: #000000;
+  border-top: 3px solid #6ab0de;
+  padding: 6px;
+  position: relative;
+}
 
 .rst-content dl.c.struct .property {
   padding-right: 4px !important;
