@@ -1,0 +1,118 @@
+/*
+ * Copyright (c) 2022 Nordic Semiconductor ASA
+ * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
+ */
+
+@import "sphinx-book-theme.css";
+
+:root {
+  --header-top-height: 150px;
+  --pst-header-height: 40px;
+  --header-height: calc(var(--header-top-height) + var(--pst-header-height));
+}
+
+@media (max-width: 767px) {
+  :root {
+    --header-top-height: 100px;
+  }
+}
+
+/* Header */
+.ncs-header {
+  background: url("images/header-bg.svg");
+  background-size: cover;
+  min-height: var(--header-height);
+  z-index: 9999;
+}
+
+.ncs-header-top {
+  height: var(--header-top-height);
+}
+
+.ncs-header-logo {
+  width: 125px;
+}
+
+.ncs-header-nav {
+  background-color: rgba(0, 51, 160, 0.6);
+  min-height: var(--pst-header-height);
+}
+
+@media (max-width: 767px) {
+  .ncs-logo-container {
+    display: none !important;
+  }
+}
+
+.ncs-btn-versions {
+  color: #fff;
+  background-color: #00a9ce;
+}
+
+/* Search box */
+.ncs-search-input,
+.ncs-search-input:focus {
+  background-color: transparent;
+  border-radius: 0;
+  border: none;
+  border-bottom: 1px solid #fff;
+  color: #fff;
+  padding-left: 2.375rem;
+  opacity: 0.6;
+  outline: none;
+}
+
+.ncs-search-input::placeholder {
+  color: #fff;
+}
+
+.ncs-search-input-icon {
+  position: absolute;
+  z-index: 2;
+  display: block;
+  width: 2.375rem;
+  height: 2.375rem;
+  line-height: 2.375rem;
+  text-align: center;
+  pointer-events: none;
+  color: #fff;
+  opacity: 0.6;
+}
+
+/* Theme customizations */
+
+@media screen {
+  .topbar {
+    top: var(--header-height);
+  }
+
+  #main-content {
+    margin-top: var(--header-height);
+  }
+
+  #site-navigation {
+    top: var(--header-height) !important;
+    z-index: 999 !important;
+  }
+}
+
+.topbar .site-navigation {
+  display: none;
+}
+
+.bd-search {
+  display: none !important;
+}
+
+.navbar {
+  position: relative;
+  width: unset !important;
+}
+
+.nav-link {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.nav-link:hover {
+  color: #fff;
+}
