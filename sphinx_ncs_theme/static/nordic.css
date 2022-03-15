@@ -6,7 +6,7 @@
 @import "sphinx-book-theme.css";
 
 :root {
-  --header-top-height: 150px;
+  --header-top-height: 160px;
   --pst-header-height: 40px;
   --header-height: calc(var(--header-top-height) + var(--pst-header-height));
 }
@@ -30,7 +30,7 @@
 }
 
 .ncs-header-logo {
-  width: 125px;
+  width: 106px;
 }
 
 .ncs-header-nav {
@@ -42,6 +42,10 @@
   .ncs-logo-container {
     display: none !important;
   }
+
+  .navbar {
+    width: 100% !important;
+  }  
 }
 
 .ncs-btn-versions {
@@ -106,13 +110,47 @@
 
 .navbar {
   position: relative;
-  width: unset !important;
+  width: unset;
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 1);
 }
 
 .nav-link:hover {
   color: #fff;
+  font-weight: 500;
+}
+
+.nav-link:active {
+  background-color: #fff;
+  color: #00A9CE;
+}
+
+.caption-text {
+  font-weight: bold;
+}
+
+.prev-next-area a p.prev-next-title {
+  font-weight: 400;
+}
+
+.blue-box {
+  background: #00a9ce !important;
+}
+
+span.guilabel {
+  white-space:nowrap;
+}
+
+#trusted-firmware-m-documentation .grid-item h2 {
+  margin: 0 0 24px !important;
+  color: white !important;
+}
+
+/*To keep Title and Contents fixed in left nav*/
+@media (min-width: 720px) {
+.bd-sidebar {
+    position: relative;
+}
 }
