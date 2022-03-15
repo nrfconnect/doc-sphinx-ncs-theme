@@ -12,8 +12,8 @@
 <div class="fixed-top d-print-none ncs-header">
   <div class="container-xl ncs-header-top">
     <div class="row h-100">
-      <div class="col align-self-start bd-topbar-whitespace ncs-logo-container">
-        <div class="bg-white p-3 rounded-bottom d-flex justify-content-center">
+      <div class="ncs-logo-container">
+        <div class="bg-white py-4 px-3 ml-2">
           <img
             class="ncs-header-logo"
             src="{{ pathto('_static/images/header-logo.svg', 1) }}"
@@ -29,12 +29,12 @@
               type="text"
               name="q"
               class="ncs-search-input form-control"
-              placeholder="Search documentation..."
+              placeholder="Search all docs..."
             />
           </div>
         </form>
       </div>
-      <div class="d-none d-md-block col-md-2 p-3">
+      <div class="d-md-block p-3">
         <div class="dropdown">
           <button
             class="btn shadow-lg dropdown-toggle ncs-btn-versions"
@@ -44,7 +44,8 @@
             aria-haspopup="true"
             aria-expanded="false"
           >
-            1.8.0
+          <span class="d-none d-md-inline">nRF Connect SDK</span>
+            v1.8.0
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a class="dropdown-item" href="#">1.7.0</a>
@@ -60,9 +61,10 @@
     <div class="container-xl">
       <div class="row">
         <div class="col col-12 d-flex justify-content-center">
-          <nav class="navbar navbar-expand-lg">
+          <nav class="navbar navbar-expand-md">
+            <span class="navbar-brand d-block d-md-none ncs-docsets py-1 pl-1 invisible">Docsets</span>
             <button
-              class="navbar-toggler"
+              class="navbar-toggler navbar-dark custom-toggler pr-0"
               type="button"
               data-toggle="collapse"
               data-target="#navbarNav"
@@ -78,6 +80,7 @@
                 <li class="nav-item pl-3 pr-3">
                   <a class="nav-link" href="{{ pathto('', 1) }}../{{ name }}/{{ config[1] }}.html">{{ config[0] }}</a>
                 </li>
+                <li><hr class="dropdown-divider"></li>
                 {%- endfor %}
               </ul>
             </div>
