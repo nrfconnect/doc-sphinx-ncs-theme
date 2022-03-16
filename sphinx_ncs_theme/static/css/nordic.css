@@ -147,7 +147,7 @@ footer table {
   padding-right: 4px !important;
 }
 
-.rst-content div.section[id="configuration-options"] dl dt {
+.rst-content section[id="configuration-options"] dl dt {
   font-weight: 700;
   margin-bottom: 12px;
   display: table;
