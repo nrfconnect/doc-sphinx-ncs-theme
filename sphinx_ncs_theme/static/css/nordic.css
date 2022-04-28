@@ -205,10 +205,10 @@ div#version_status {
 
 /* numbered steps */
 
-div.numbered-step > h2::before,
-div.numbered-step > h3::before,
-div.numbered-step > h4::before,
-div.numbered-step > h5::before {
+section.numbered-step > h2::before,
+section.numbered-step > h3::before,
+section.numbered-step > h4::before,
+section.numbered-step > h5::before {
   background: var(--docset-color);
   border-radius: 0.8em;
   -moz-border-radius: 0.8em;
@@ -238,27 +238,27 @@ h5 {
   counter-reset: step-count-h6;
 }
 
-div.numbered-step > h2::before {
+section.numbered-step > h2::before {
   counter-increment: step-count-h2;
   content: counter(step-count-h2);
 }
 
-div.numbered-step > h3::before {
+section.numbered-step > h3::before {
   counter-increment: step-count-h3;
   content: counter(step-count-h3);
 }
 
-div.numbered-step > h4::before {
+section.numbered-step > h4::before {
   counter-increment: step-count-h4;
   content: counter(step-count-h4);
 }
 
-div.numbered-step > h5::before {
+section.numbered-step > h5::before {
   counter-increment: step-count-h5;
   content: counter(step-count-h5);
 }
 
-div.numbered-step > h6::before {
+section.numbered-step > h6::before {
   counter-increment: step-count-h6;
   content: counter(step-count-h6);
 }
@@ -341,10 +341,10 @@ div.numbered-step > h6::before {
   color: var(--docset-color);
 }
 
-div.numbered-step > h2::before,
-div.numbered-step > h3::before,
-div.numbered-step > h4::before,
-div.numbered-step > h5::before {
+section.numbered-step > h2::before,
+section.numbered-step > h3::before,
+section.numbered-step > h4::before,
+section.numbered-step > h5::before {
   background: var(--docset-color);
 }
 
