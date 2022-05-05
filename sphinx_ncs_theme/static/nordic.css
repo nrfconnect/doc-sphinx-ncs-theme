@@ -3,12 +3,11 @@
  * SPDX-License-Identifier: LicenseRef-Nordic-5-Clause
  */
 
-@import "sphinx-book-theme.css";
+@import "styles/sphinx-book-theme.css";
 
 :root {
   --header-top-height: 160px;
   --pst-header-height: 40px;
-  --header-height: calc(var(--header-top-height) + var(--pst-header-height));
 }
 
 @media (max-width: 767px) {
@@ -21,8 +20,6 @@
 .ncs-header {
   background: url("images/header-bg.svg");
   background-size: cover;
-  min-height: var(--header-height);
-  z-index: 9999;
 }
 
 .ncs-header-top {
@@ -35,7 +32,6 @@
 
 .ncs-header-nav {
   background-color: rgba(0, 51, 160, 0.6);
-  min-height: var(--pst-header-height);
 }
 
 @media (max-width: 767px) {
@@ -45,7 +41,7 @@
 
   .navbar {
     width: 100% !important;
-  }  
+  }
 }
 
 .ncs-btn-versions {
@@ -85,25 +81,6 @@
 
 /* Theme customizations */
 
-@media screen {
-  .topbar {
-    top: var(--header-height);
-  }
-
-  #main-content {
-    margin-top: var(--header-height);
-  }
-
-  #site-navigation {
-    top: var(--header-height) !important;
-    z-index: 999 !important;
-  }
-}
-
-.topbar .site-navigation {
-  display: none;
-}
-
 .bd-search {
   display: none !important;
 }
@@ -114,17 +91,16 @@
 }
 
 .nav-link {
-  color: rgba(255, 255, 255, 1);
+  color: #fff;
 }
 
 .nav-link:hover {
   color: #fff;
-  font-weight: 500;
 }
 
 .nav-link:active {
   background-color: #fff;
-  color: #00A9CE;
+  color: #00a9ce;
 }
 
 .caption-text {
@@ -135,22 +111,12 @@
   font-weight: 400;
 }
 
-.blue-box {
-  background: #00a9ce !important;
-}
-
 span.guilabel {
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
-#trusted-firmware-m-documentation .grid-item h2 {
-  margin: 0 0 24px !important;
-  color: white !important;
-}
-
-/*To keep Title and Contents fixed in left nav*/
-@media (min-width: 720px) {
-.bd-sidebar {
+@media (min-width: 768px) {
+  .bd-sidebar {
     position: relative;
-}
+  }
 }
