@@ -120,3 +120,7 @@ span.guilabel {
     position: relative;
   }
 }
+
+.dropdown-menu.show {
+  z-index: 1030;
+}
