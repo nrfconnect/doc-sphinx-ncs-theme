@@ -123,4 +123,11 @@ span.guilabel {
 
 .dropdown-menu.show {
   z-index: 1030;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-height: 20em;
+}
+
+div.announcement > a {
+  color: #89eaff;
 }

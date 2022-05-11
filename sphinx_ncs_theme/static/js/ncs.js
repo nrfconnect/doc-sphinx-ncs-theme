@@ -7,6 +7,7 @@ function NCS () {
   const NCS_PATH_PREFIX = "/nRF_Connect_SDK/doc/";
   const STABLE_VERSION_RE = /^(\d+\.)+\d+$/;
   const DEV_VERSION_RE = /^(\d+\.)+\d+-[a-z0-9]+$/;
+  const LOCALHOST_RE = /^(localhost)|((\d{1,3}\.){3}\d{1,3}):\d{4,5}/
 
   /*
    * Allow running from localhost; local build can be served with:
@@ -14,7 +15,7 @@ function NCS () {
    */
   state.updateLocations = function(){
     const host = window.location.host;
-    if (host.startsWith("localhost")) {
+    if (LOCALHOST_RE.test(host)) {
       this.url_prefix = "/";
     } else {
       this.url_prefix = NCS_PATH_PREFIX;
@@ -80,6 +81,7 @@ function NCS () {
   state.updateVersionDropDown = function() {
     const ncs = window.NCS;
     const versions = ncs.versions.VERSIONS;
+    const by_version = ncs.versions.COMPONENTS_BY_VERSION[ncs.current_version];
 
     // Avoid applying DOM changes on errors
     const path = window.location.pathname;
@@ -87,27 +89,16 @@ function NCS () {
       return;
     }
 
-    // Only display dropdown for nRF Connect documentation set
-    const prefix_len = this.url_prefix.length;
-    if (path.slice(prefix_len).split("/")[1] !== "nrf") {
-      return;
-    }
+    // Update dropdown text
+    const ncs_version = by_version["ncs"];
+    $("button.ncs-btn-versions").text(`nRF Connect SDK v${ncs_version}`);
 
-    let links = '';
+    // Update dropdown content
     $.each(versions, function(_, v) {
       if (v !== ncs.current_version) {
-        links += "<li><a href=" + ncs.url_root + v + "/" + ncs.current_page +
-          ">" + v + "</a></li>";
+        let link = `<a class="dropdown-item" href=${ncs.url_root + v}/${ncs.current_page}>${v}</a>`;
+        $("div.dropdown-menu").append(link);
       }
-    });
-
-    $("div.version").append("<span class='fa fa-caret-down dropit'></span>" +
-      "<ul class='dropdown'>" + links + "</ul>");
-
-    // hide version dropdown by default & toggle
-    $(".dropdown").hide();
-    $(".dropit").click(function(){
-      $(this).next(".dropdown").toggle();
     });
   };
 
@@ -137,55 +128,15 @@ function NCS () {
     const LAST_RELEASE_MSG =
       "You are looking at the documentation for the latest official release.";
 
-    if ($("#version_status").length === 0) {
-      $("div[role='navigation'] > ul.wy-breadcrumbs").
-        after("<div id='version_status'></div>");
-    }
-
     if (ncs.current_version === VERSIONS[0]) {
-      $("div#version_status").hide();
+      $("div.announcement").hide();
     } else if (ncs.current_version === VERSIONS[last_version_index]) {
-      $("div#version_status").html(LAST_RELEASE_MSG);
+      $("div.announcement").html(LAST_RELEASE_MSG);
     } else if (DEV_VERSION_RE.test(ncs.current_version)) {
-      $("div#version_status").html(DEV_RELEASE_MSG);
+      $("div.announcement").html(DEV_RELEASE_MSG);
     } else {
-      $("div#version_status").html(OLD_RELEASE_MSG);
+      $("div.announcement").html(OLD_RELEASE_MSG);
     }
-  };
-
-  /*
-   * Update the versions displayed in the documentation chooser
-   */
-  state.updateDocsetVersions = function() {
-    const ncs = window.NCS;
-    const current_version = ncs.current_version;
-    const by_version = ncs.versions.COMPONENTS_BY_VERSION[current_version];
-
-    let found = {};
-    $.each(by_version, function(docset) {
-      found[docset] = false;
-    });
-
-    // Update all versions but the one that is selected
-    $('div.rst-other-versions').children('div').each(function (_, el) {
-      $.each(by_version, function(docset, version) {
-        if ($(el).hasClass(docset)){
-          let a = $(el).children('a');
-          a.text(a.text() + ' ' + version);
-          found[docset] = true;
-        }
-      });
-    });
-
-    // Update the currently selected version
-    $('span.rst-current-version > span.fa-book').each(function (_, el) {
-      $.each(found, function(name, value) {
-        if (!value) {
-          $(el).text($(el).text() + ' ' + by_version[name]);
-          return;
-        }
-      });
-    });
   };
 
   state.updatePage = function() {
@@ -195,7 +146,6 @@ function NCS () {
     ncs.findCurrentPage();
     ncs.updateVersionDropDown();
     ncs.showVersion();
-    ncs.updateDocsetVersions();
   };
 
   const NCS_SESSION_KEY = "ncs";
@@ -216,7 +166,6 @@ function NCS () {
    * Update the session cache with a new versions.json
    */
   state.saveVersions = function(versions_data) {
-    let ncs = window.NCS;
     const session_value = JSON.stringify(versions_data);
     window.sessionStorage.setItem(NCS_SESSION_KEY, session_value);
     window.NCS.versions = versions_data;
