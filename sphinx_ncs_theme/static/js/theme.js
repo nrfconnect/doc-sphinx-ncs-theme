@@ -4,14 +4,6 @@ var jQuery = (typeof(window) != 'undefined') ? window.jQuery : require('jquery')
 function ThemeNav () {
 
     var nav = {
-        navBar: null,
-        win: null,
-        winScroll: false,
-        winResize: false,
-        linkScroll: false,
-        winPosition: 0,
-        winHeight: null,
-        docHeight: null,
         isRunning: false
     };
 
@@ -34,51 +26,18 @@ function ThemeNav () {
         self.isRunning = true;
         jQuery(function ($) {
             self.init($);
-
-            if (withStickyNav) {
-                // Set scroll monitor
-                self.win.on('scroll', function () {
-                    if (!self.linkScroll) {
-                        if (!self.winScroll) {
-                            self.winScroll = true;
-                            requestAnimationFrame(function() { self.onScroll(); });
-                        }
-                    }
-                });
-            }
-
-            // Set resize monitor
-            self.win.on('resize', function () {
-                if (!self.winResize) {
-                    self.winResize = true;
-                    requestAnimationFrame(function() { self.onResize(); });
-                }
-            });
-
-            self.onResize();
         });
 
     };
 
-    // TODO remove this with a split in theme and Read the Docs JS logic as
-    // well, it's only here to support 0.3.0 installs of our theme.
-    nav.enableSticky = function() {
-        this.enable(true);
-    };
-
     nav.init = function ($) {
-        var doc = $(document),
-            self = this;
-
-        this.navBar = $('div.wy-side-scroll:first');
-        this.win = $(window);
+        var self = this;
 
         // Set up javascript UX bits
         $(document)
             // Shift nav in mobile when clicking the menu.
             .on('click', "[data-toggle='wy-nav-top']", function() {
                 $("[data-toggle='wy-nav-shift']").toggleClass("shift");
-                $("[data-toggle='rst-versions']").toggleClass("shift");
             })
 
             // Nav menu link click operations
@@ -86,13 +45,8 @@ function ThemeNav () {
                 var target = $(this);
                 // Close menu when you click a link.
                 $("[data-toggle='wy-nav-shift']").removeClass("shift");
-                $("[data-toggle='rst-versions']").toggleClass("shift");
                 // Handle dynamic display of l3 and l4 nav lists
                 self.toggleCurrent(target);
-                self.hashChange();
-            })
-            .on('click', "[data-toggle='rst-current-version']", function() {
-                $("[data-toggle='rst-versions']").toggleClass("shift-up");
             })
 
         // Make tables responsive
@@ -117,35 +71,6 @@ function ThemeNav () {
                 return false;
             });
             link.prepend(expand);
-        });
-    };
-
-    nav.reset = function () {
-    };
-
-    nav.onScroll = function () {
-        this.winScroll = false;
-        var newWinPosition = this.win.scrollTop(),
-            winBottom = newWinPosition + this.winHeight,
-            navPosition = this.navBar.scrollTop(),
-            newNavPosition = navPosition + (newWinPosition - this.winPosition);
-        if (newWinPosition < 0 || winBottom > this.docHeight) {
-            return;
-        }
-        this.navBar.scrollTop(newNavPosition);
-        this.winPosition = newWinPosition;
-    };
-
-    nav.onResize = function () {
-        this.winResize = false;
-        this.winHeight = this.win.height();
-        this.docHeight = $(document).height();
-    };
-
-    nav.hashChange = function () {
-        this.linkScroll = true;
-        this.win.one('hashchange', function () {
-            this.linkScroll = false;
         });
     };
 
@@ -180,39 +105,5 @@ function ThemeNav () {
 if (typeof(window) != 'undefined') {
     window.SphinxRtdTheme = {
         Navigation: ThemeNav(),
-        // TODO remove this once static assets are split up between the theme
-        // and Read the Docs. For now, this patches 0.3.0 to be backwards
-        // compatible with a pre-0.3.0 layout.html
-        StickyNav: ThemeNav(),
     };
 }
-
-
-// requestAnimationFrame polyfill by Erik Möller. fixes from Paul Irish and Tino Zijdel
-// https://gist.github.com/paulirish/1579671
-// MIT license
-
-(function() {
-    var lastTime = 0;
-    var vendors = ['ms', 'moz', 'webkit', 'o'];
-    for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
-        window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
-        window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame']
-                                   || window[vendors[x]+'CancelRequestAnimationFrame'];
-    }
-
-    if (!window.requestAnimationFrame)
-        window.requestAnimationFrame = function(callback, element) {
-            var currTime = new Date().getTime();
-            var timeToCall = Math.max(0, 16 - (currTime - lastTime));
-            var id = window.setTimeout(function() { callback(currTime + timeToCall); },
-              timeToCall);
-            lastTime = currTime + timeToCall;
-            return id;
-        };
-
-    if (!window.cancelAnimationFrame)
-        window.cancelAnimationFrame = function(id) {
-            clearTimeout(id);
-        };
-}());
