@@ -210,6 +210,10 @@ kbd {
   }
 }
 
+.nav-item.active {
+  background: rgba(255, 255, 255, 0.25);
+}
+
 .nav-link {
   color: #fff !important;
 }
