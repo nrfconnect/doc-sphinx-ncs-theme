@@ -466,7 +466,7 @@ footer table {
  ******************************************************************************/
 
 a.reference.internal[href*="#config-"] {
-  color: #404040;
+  color: #404040 !important;
   font-weight: 700;
   font-size: 75%;
   font-family: SFMono-Regular, Menlo, Monaco, Consolas, Liberation Mono,
@@ -595,4 +595,26 @@ div.figure {
 
 .contents.local ul p {
   margin-bottom: 0px;
+}
+
+.rst-content table.docutils td p {
+  margin-bottom: 0.6rem !important;
+}
+
+.rst-content table.docutils td p:last-child {
+  font-size: .9rem;
+  margin-bottom: 0 !important;
+}
+
+.rst-content h2 {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  overflow-x: auto;
+  line-height: 40px;
+}
+  
+.grid-item h2 {
+  border: 0px;
+  padding-top: 0px;
+  line-height: unset;
 }
