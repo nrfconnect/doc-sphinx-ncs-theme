@@ -614,7 +614,6 @@ div.figure {
 .rst-content h2 {
   border-top: 1px solid #ddd;
   padding-top: 20px;
-  overflow-x: auto;
   line-height: 40px;
 }
   
