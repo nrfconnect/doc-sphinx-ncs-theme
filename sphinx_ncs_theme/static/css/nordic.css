@@ -165,12 +165,13 @@ kbd {
   background-color: transparent !important;
   border-radius: 0 !important;
   border: none !important;
-  border-bottom: 1px solid #fff !important;
+  border-bottom: 1px solid #fffffff2 !important;
   box-shadow: none !important;
-  color: #fff !important;
+  color: #ffffff91  !important;
+  font-style:italic;
   font-size: 100% !important;
   padding-left: 2.375rem !important;
-  opacity: 0.6;
+  opacity: 0.8;
   outline: none;
   background: transparent url("../images/search.svg") no-repeat 5px center;
   background-size: 1rem;
