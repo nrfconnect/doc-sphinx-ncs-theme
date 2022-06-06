@@ -5,6 +5,10 @@
  * Base
  ******************************************************************************/
 
+body, html {
+  overflow-x: unset;
+}
+
 a {
   color: #00a9ce !important;
   text-decoration: unset !important;
