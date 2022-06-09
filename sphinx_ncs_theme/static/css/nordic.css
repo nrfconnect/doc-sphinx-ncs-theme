@@ -627,3 +627,7 @@ div.figure {
   padding-top: 0px;
   line-height: unset;
 }
+
+span.guilabel {
+  white-space: nowrap;
+}
