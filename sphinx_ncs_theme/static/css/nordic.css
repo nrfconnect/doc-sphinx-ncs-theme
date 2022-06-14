@@ -631,3 +631,25 @@ div.figure {
 span.guilabel {
   white-space: nowrap;
 }
+
+/*******************************************************************************
+ * Scroll to top
+ ******************************************************************************/
+
+#scroll-container {
+  position: relative;
+}
+
+#scroll-btn {
+  background-color: #00a9ce;
+  box-shadow: none;
+  color: #fff;
+  visibility: hidden;
+  position: fixed;
+  bottom: 40px;
+  right: 25px;
+  z-index: 20;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
