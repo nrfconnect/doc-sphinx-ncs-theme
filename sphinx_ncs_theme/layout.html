@@ -41,6 +41,7 @@
           </div>
         </form>
       </div>
+      {%- if not theme_standalone|tobool %}
       <div class="col-4 col-md-3 d-md-block p-3 text-end">
         <div class="dropdown">
           <button
@@ -56,8 +57,10 @@
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
         </div>
       </div>
+      {%- endif %}
     </div>
   </div>
+  {%- if not theme_standalone|tobool %}
   <div class="ncs-header-nav">
     <div class="container-xl">
       <div class="row">
@@ -96,5 +99,6 @@
       </div>
     </div>
   </div>
+  {%- endif %}
 </div>
 {% endblock %}
