@@ -104,9 +104,14 @@ kbd {
 
 .wy-nav-side {
   position: unset;
-  display: flex;
   flex-direction: column;
   background: unset;
+}
+
+@media screen and (min-width: 769px) {
+  .wy-nav-side {
+    flex: 0 0 320px;
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -255,6 +260,10 @@ kbd {
 .wy-nav-top {
   background: #fcfcfc;
   color: #00a9ce;
+}
+
+.wy-side-scroll {
+  overflow-y: auto;
 }
 
 .wy-side-nav-search {
