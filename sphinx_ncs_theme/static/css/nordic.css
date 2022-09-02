@@ -114,6 +114,23 @@ kbd {
     position: sticky;
     max-height: 100vh;
   }
+  .wy-side-scroll {
+    padding: 0 0 calc(var(--header-top-height) * 1.3) 0;
+  }
+  .wy-side-scroll:hover {
+    overflow-y: auto;
+  }
+  .wy-side-scroll::-webkit-scrollbar {
+    width: 10px;
+  }
+  .wy-side-scroll::-webkit-scrollbar-thumb {
+    background: rgb(193, 193, 193);
+    border-radius: 6px;
+    border: 1px solid rgb(237, 237, 237);
+  }
+  .wy-side-scroll::-webkit-scrollbar-track {
+    background: rgb(237, 237, 237)
+  }
 }
 
 @media screen and (max-width: 768px) {
@@ -265,7 +282,7 @@ kbd {
 }
 
 .wy-side-scroll {
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .wy-side-nav-search {
