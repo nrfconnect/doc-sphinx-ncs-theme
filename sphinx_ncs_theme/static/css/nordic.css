@@ -170,6 +170,13 @@ kbd {
   display: none;
 }
 
+.announcement-fixed {
+  background-color: #f0f0a8;
+  padding: 5px;
+  text-align: center;
+  display: block;
+}
+
 .ncs-header {
   background: url("../images/header-bg.svg");
   background-size: cover;
