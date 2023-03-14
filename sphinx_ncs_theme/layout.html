@@ -13,6 +13,26 @@
   rel="shortcut icon"
   href="{{ pathto('_static/images/favicon.ico', 1) }}"
 />
+{% endblock %} {%- block sidebartitle %}
+
+<a href="{{ pathto(root_doc|default(master_doc)) }}">
+  {{ project }}
+</a>
+
+{%- if theme_subtitle %}
+  <div class="ncs-subtitle">
+    {{ theme_subtitle }}
+  </div>
+{%- endif %}
+
+{%- if theme_display_version %}
+  <div class="version">
+    {{ version }}
+  </div>
+{%- endif %}
+
+{%- include "searchbox.html" %}
+
 {% endblock %} {%- block extrabody %}
 
 {%- if theme_add_gtm|tobool %}

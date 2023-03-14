@@ -310,10 +310,13 @@ kbd {
 
 .wy-side-nav-search > a {
   font-size: 150%;
+  margin-bottom: unset;
+  padding: unset;
 }
 
 .wy-side-nav-search > div.version {
   color: unset;
+  margin-top: unset;
 }
 
 .searchformwrapper {
@@ -350,6 +353,11 @@ kbd {
 
 .rst-versions {
   display: none !important;
+}
+
+.ncs-subtitle {
+  color: rgba(0, 169, 206, 0.65);
+  margin-bottom: 0.5rem;
 }
 
 /*******************************************************************************
