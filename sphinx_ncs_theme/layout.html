@@ -27,7 +27,11 @@
 <!-- End Google Tag Manager (noscript) -->
 {%- endif %}
 
-<div class="announcement"></div>
+<div class="announcement{{ '-fixed' if theme_set_default_announcement else '' }}">
+  {%- if theme_set_default_announcement|tobool %}
+  {{ theme_default_announcement_message }}
+  {%- endif %}
+</div>
 <div class="d-print-none ncs-header">
   <div class="container-xl ncs-header-top">
     <div class="row h-100">
