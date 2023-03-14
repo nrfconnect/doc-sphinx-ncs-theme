@@ -14,6 +14,19 @@
   href="{{ pathto('_static/images/favicon.ico', 1) }}"
 />
 {% endblock %} {%- block extrabody %}
+
+{%- if theme_add_gtm|tobool %}
+<!-- Google Tag Manager (noscript) -->
+<noscript>
+  <iframe src="https://www.googletagmanager.com/ns.html?id={{ theme_gtm_id }}"
+  height="0"
+  width="0"
+  style="display:none;visibility:hidden">
+  </iframe>
+</noscript>
+<!-- End Google Tag Manager (noscript) -->
+{%- endif %}
+
 <div class="announcement"></div>
 <div class="d-print-none ncs-header">
   <div class="container-xl ncs-header-top">
