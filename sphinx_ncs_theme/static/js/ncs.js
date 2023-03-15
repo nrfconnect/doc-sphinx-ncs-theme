@@ -4,7 +4,6 @@ function NCS () {
   let state = {};
 
   // XXX: do not remove the trailing '/'
-  const NCS_PATH_PREFIX = "/nRF_Connect_SDK/doc/";
   const STABLE_VERSION_RE = /^(\d+\.)+\d+$/;
   const DEV_VERSION_RE = /^(\d+\.)+\d+-[a-z0-9]+$/;
   const LOCALHOST_RE = /^(localhost)|((\d{1,3}\.){3}\d{1,3}):\d{4,5}/
@@ -19,7 +18,9 @@ function NCS () {
     if (LOCALHOST_RE.test(host)) {
       this.url_prefix = "/";
     } else {
-      this.url_prefix = NCS_PATH_PREFIX;
+      let path = window.location.pathname;
+      let prefix_end_index = path.indexOf("/doc/") + "/doc/".length;
+      this.url_prefix = path.substring(0, prefix_end_index);
       root_suffix = "latest";
     }
 
