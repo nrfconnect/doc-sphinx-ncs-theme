@@ -1,0 +1,15 @@
+{% extends "sphinx_rtd_theme/breadcrumbs.html" %}
+{%- block breadcrumbs_aside %}
+  <li class="wy-breadcrumbs-aside">
+    {% if 'gh_link_get_blob_url' is filter %}
+      {% set gh_blob_url = pagename | gh_link_get_blob_url %}
+    {%- endif %}
+    {%- if gh_blob_url is defined and gh_blob_url %}
+      <a href="{{ gh_blob_url }}" class="fa fa-github"> {{ _('Open on GitHub') }}</a>
+    {%- elif show_source and source_url_prefix %}
+      <a href="{{ source_url_prefix }}{{ pagename }}{{ page_source_suffix }}">{{ _('View page source') }}</a>
+    {%- elif show_source and has_source and sourcename %}
+      <a href="{{ pathto('_sources/' + sourcename, true)|e }}" rel="nofollow"> {{ _('View page source') }}</a>
+    {%- endif %}
+  </li>
+{%- endblock %}
