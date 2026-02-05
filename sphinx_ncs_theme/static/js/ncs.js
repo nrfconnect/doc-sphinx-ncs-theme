@@ -6,7 +6,7 @@ function NCS () {
   // XXX: do not remove the trailing '/'
   const STABLE_VERSION_RE = /^(\d+\.)+\d+$/;
   const DEV_VERSION_RE = /^(\d+\.)+\d+-[a-z0-9]+$/;
-  const LOCALHOST_RE = /^(localhost)|((\d{1,3}\.){3}\d{1,3}):\d{4,5}/
+  const LOCALHOST_RE = /^(localhost)|(0\.0\.0\.0)|((\d{1,3}\.){3}\d{1,3}):\d{4,5}/
 
   /*
    * Allow running from localhost; local build can be served with:
@@ -14,18 +14,16 @@ function NCS () {
    */
   state.updateLocations = function(){
     const host = window.location.host;
-    let root_suffix = "";
     if (LOCALHOST_RE.test(host)) {
       this.url_prefix = "/";
+      this.url_root = window.location.protocol + "//" + host + "/";
+      this.version_data_url = this.url_root + "versions.json";
     } else {
-      let path = window.location.pathname;
-      let prefix_end_index = path.indexOf("/doc/") + "/doc/".length;
-      this.url_prefix = path.substring(0, prefix_end_index);
-      root_suffix = "latest";
+      // New URL structure: https://domain.x/latest/nrf/index.html
+      this.url_prefix = "/";
+      this.url_root = window.location.protocol + "//" + host + "/";
+      this.version_data_url = this.url_root + "latest/versions.json";
     }
-
-    this.url_root = window.location.protocol + "//" + host + this.url_prefix;
-    this.version_data_url = this.url_root + root_suffix + "/versions.json";
   };
 
   /*
@@ -76,7 +74,11 @@ function NCS () {
     const ncs = window.NCS;
 
     // Update dropdown text
-    $("#ncsversion").text(`v${ncs.current_version}`);
+    if (LOCALHOST_RE.test(window.location.host)) {
+      $("#ncsversion").text("(local)");
+    } else {
+      $("#ncsversion").text(`v${ncs.current_version}`);
+    }
 
     // Update dropdown content
     $.each(ncs.versions, function(i, v) {
