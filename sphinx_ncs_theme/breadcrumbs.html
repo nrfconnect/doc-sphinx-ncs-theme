@@ -1,6 +1,36 @@
 {% extends "sphinx_rtd_theme/breadcrumbs.html" %}
 {%- block breadcrumbs_aside %}
-  <li class="wy-breadcrumbs-aside">
+  <li class="wy-breadcrumbs-aside ncs-breadcrumbs-aside">
+    {% if prev or next %}
+    <span class="ncs-breadcrumb-arrows">
+      {% if prev %}
+      <a href="{{ prev.link|e }}" class="ncs-breadcrumb-nav ncs-breadcrumb-prev" title="{{ prev.title|striptags|e }}" accesskey="p" rel="prev" aria-label="{{ _('Previous') }}">
+        <svg class="ncs-breadcrumb-chevron" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </a>
+      {% else %}
+      <span class="ncs-breadcrumb-nav ncs-breadcrumb-prev ncs-breadcrumb-nav--disabled" aria-disabled="true" title="{{ _('No previous page') }}">
+        <svg class="ncs-breadcrumb-chevron" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+      </span>
+      {% endif %}
+      {% if next %}
+      <a href="{{ next.link|e }}" class="ncs-breadcrumb-nav ncs-breadcrumb-next" title="{{ next.title|striptags|e }}" accesskey="n" rel="next" aria-label="{{ _('Next') }}">
+        <svg class="ncs-breadcrumb-chevron" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </a>
+      {% else %}
+      <span class="ncs-breadcrumb-nav ncs-breadcrumb-next ncs-breadcrumb-nav--disabled" aria-disabled="true" title="{{ _('No next page') }}">
+        <svg class="ncs-breadcrumb-chevron" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </span>
+      {% endif %}
+    </span>
+    {% endif %}
     {% if 'gh_link_get_blob_url' is filter %}
       {% set gh_blob_url = pagename | gh_link_get_blob_url %}
     {%- endif %}

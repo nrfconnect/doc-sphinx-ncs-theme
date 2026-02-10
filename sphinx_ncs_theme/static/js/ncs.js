@@ -188,8 +188,380 @@ function NCS () {
 if (typeof window !== 'undefined') {
   window.NCS = NCS();
 }
+/**
+ * Default heading above the right-hand local ToC when the page has no
+ * .. contents:: caption (no p.topic-title). Matches docutils markup for styling.
+ */
+function initNcsLocalTocHeading() {
+  var TITLE = 'On This Topic';
+  var $roots = $('.contents.local').add('nav.contents.local');
+  $roots.each(function () {
+    var $root = $(this);
+    if ($root.children('p.topic-title').length) {
+      return;
+    }
+    if ($root.find('> .ncs-local-toc-heading').length) {
+      return;
+    }
+    var $title = $('<p class="topic-title ncs-local-toc-heading"></p>')
+      .text(TITLE)
+      .attr('role', 'heading')
+      .attr('aria-level', '3');
+    $root.prepend($title);
+  });
+}
+/**
+ * Right-hand local ToC: inject .toctree-expand buttons.
+ * Toggle is independent of the sidebar: several branches can stay open.
+ */
+function initNcsLocalTocExpand() {
+  function toggleNcsLocalTocBranch($link) {
+    var $li = $link.closest('li');
+    if (!$li.children('ul').length) {
+      return;
+    }
+    if ($li.hasClass('current')) {
+      $li.find('li.current').removeClass('current').attr('aria-expanded', 'false');
+    }
+    $li.toggleClass('current');
+    $li.attr('aria-expanded', $li.hasClass('current') ? 'true' : 'false');
+  }
 
+  function initLocalTocExpand(rootSelector) {
+    $(rootSelector).each(function () {
+      var $root = $(this);
+      $root.find('ul').each(function () {
+        var $ul = $(this);
+        if (!$ul.parent().is('li')) {
+          return;
+        }
+        var $link = $ul.siblings('a').first();
+        if (!$link.length) {
+          $link = $ul.siblings('p').children('a').first();
+        }
+        if (!$link.length || $link.find('.toctree-expand').length) {
+          return;
+        }
+        var expandBtn = $(
+          '<button type="button" class="toctree-expand" title="Open/close menu" aria-expanded="false"></button>'
+        );
+        expandBtn.on('click', function (ev) {
+          toggleNcsLocalTocBranch($link);
+          expandBtn.attr(
+            'aria-expanded',
+            $link.closest('li').hasClass('current') ? 'true' : 'false'
+          );
+          ev.stopPropagation();
+          ev.preventDefault();
+          return false;
+        });
+        $link.append(expandBtn);
+      });
+    });
+  }
+  initLocalTocExpand('.contents.local');
+  initLocalTocExpand('nav.contents.local');
+}
+/**
+ * Header toolbar: expand/collapse all branches.
+ * Runs after initNcsLocalTocExpand so .toctree-expand exists for aria sync.
+ */
+function initNcsLocalTocToolbar() {
+  function syncExpandButtons($root) {
+    $root.find('.toctree-expand').each(function () {
+      var open = $(this).closest('li').hasClass('current');
+      $(this).attr('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  function mount($root) {
+    if ($root.children('.ncs-local-toc-header').length) {
+      return;
+    }
+    var $title = $root.children('.topic-title').first();
+    if (!$title.length) {
+      return;
+    }
+
+    var $header = $('<div class="ncs-local-toc-header"></div>');
+    var $toolbar = $(
+      '<div class="ncs-local-toc-toolbar" role="toolbar" aria-label="On this topic"></div>'
+    );
+
+    var $expandAll = $(
+      '<button type="button" class="ncs-local-toc-tool ncs-local-toc-expand-all"></button>'
+    )
+      .attr('title', 'Expand all')
+      .attr('aria-label', 'Expand all sections')
+      .html(
+        '<span class="ncs-local-toc-guillemet-stack" aria-hidden="true">' +
+        '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--up">\u203A</span>' +
+        '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--down">\u203A</span>' +
+        '</span>'
+      );
+
+    var $collapseAll = $(
+      '<button type="button" class="ncs-local-toc-tool ncs-local-toc-collapse-all"></button>'
+    )
+      .attr('title', 'Collapse all')
+      .attr('aria-label', 'Collapse all sections')
+      .html(
+        '<span class="ncs-local-toc-guillemet-stack" aria-hidden="true">' +
+        '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--down">\u203A</span>' +
+        '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--up">\u203A</span>' +
+        '</span>'
+      );
+    var $g1 = $('<div class="ncs-local-toc-toolbar-group"></div>').append($expandAll);
+    var $g2 = $(
+      '<div class="ncs-local-toc-toolbar-group ncs-local-toc-toolbar-group--divider"></div>'
+    ).append($collapseAll);
+    $toolbar.append($g1, $g2);
+    $header.append($title.detach(), $toolbar);
+    $root.prepend($header);
+
+    $expandAll.on('click', function () {
+      $root
+        .find('li')
+        .filter(function () {
+          return $(this).children('ul').length > 0;
+        })
+        .addClass('current')
+        .attr('aria-expanded', 'true');
+      syncExpandButtons($root);
+    });
+
+    $collapseAll.on('click', function () {
+      $root.find('li.current').removeClass('current').attr('aria-expanded', 'false');
+      syncExpandButtons($root);
+    });
+  }
+  $('.contents.local').add('nav.contents.local').each(function () {
+    mount($(this));
+  });
+}
+/**
+ * Left sidebar global ToC: expand/collapse all (same controls as right local ToC).
+ * Inserts a bar above .wy-menu-vertical; uses li.current + .toctree-expand like theme.js.
+ */
+function initNcsSidebarTocToolbar() {
+  var $menu = $('.wy-menu-vertical').first();
+  if (!$menu.length || $menu.prev('.ncs-sidebar-toc-header').length) {
+    return;
+  }
+
+  function syncExpandButtons() {
+    $menu.find('.toctree-expand').each(function () {
+      var open = $(this).closest('li').hasClass('current');
+      $(this).attr('aria-expanded', open ? 'true' : 'false');
+    });
+  }
+
+  function currentPageLink() {
+    var path = window.location.pathname.replace(/\/+$/, '') || '/';
+    return $menu.find('a[href]').filter(function () {
+      try {
+        var p = new URL(this.href, window.location.href).pathname.replace(/\/+$/, '') || '/';
+        return p === path;
+      } catch (e) {
+        return false;
+      }
+    }).first();
+  }
+
+  var $header = $('<div class="ncs-sidebar-toc-header"></div>');
+  var $toolbar = $(
+    '<div class="ncs-local-toc-toolbar" role="toolbar" aria-label="Navigation"></div>'
+  );
+
+ 
+  var $expandAll = $(
+    '<button type="button" class="ncs-sidebar-toc-btn ncs-sidebar-toc-btn--expand"></button>'
+  )
+    .attr('title', 'Expand all')
+    .attr('aria-label', 'Expand all sections')
+    .html(
+      '<span class="ncs-local-toc-guillemet-stack" aria-hidden="true">' +
+      '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--up">\u203A</span>' +
+      '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--down">\u203A</span>' +
+      '</span>' +
+      '<span class="ncs-sidebar-toc-btn__label">Expand</span>'
+    );
+
+  var $collapseAll = $(
+    '<button type="button" class="ncs-sidebar-toc-btn ncs-sidebar-toc-btn--collapse"></button>'
+  )
+    .attr('title', 'Collapse all')
+    .attr('aria-label', 'Collapse all sections')
+    .html(
+      '<span class="ncs-local-toc-guillemet-stack" aria-hidden="true">' +
+      '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--down">\u203A</span>' +
+      '<span class="ncs-local-toc-guillemet ncs-local-toc-guillemet--up">\u203A</span>' +
+      '</span>' +
+      '<span class="ncs-sidebar-toc-btn__label">Collapse</span>'
+    );
+
+  var $g1 = $('<div class="ncs-local-toc-toolbar-group"></div>').append($expandAll);
+  var $g2 = $(
+    '<div class="ncs-local-toc-toolbar-group ncs-local-toc-toolbar-group--divider"></div>'
+  ).append($collapseAll);
+  $toolbar.append($g1, $g2);
+  $header.append($toolbar);
+  $menu.before($header);
+
+  $expandAll.on('click', function () {
+    $menu
+      .find('li')
+      .filter(function () {
+        return $(this).children('ul').length > 0;
+      })
+      .addClass('current')
+      .attr('aria-expanded', 'true');
+    syncExpandButtons();
+  });
+
+  $collapseAll.on('click', function () {
+    $menu.find('li.current').removeClass('current').attr('aria-expanded', 'false');
+    var $link = currentPageLink();
+    if ($link.length) {
+      $link.parents('.wy-menu-vertical li').addClass('current').attr('aria-expanded', 'true');
+    }
+    syncExpandButtons();
+  });
+}
+/**
+ * Highlight local ToC link for the section nearest the top of the viewport
+ * (scroll spy). Uses class ncs-toc-active — not li.current (collapse state).
+ */
+function initNcsLocalTocScrollSpy() {
+  var ACTIVE = 'ncs-toc-active';
+  var $roots = $('.contents.local').add('nav.contents.local');
+  if (!$roots.length) {
+    return;
+  }
+
+  var sections = [];
+  var byId = {};
+
+  $roots.find('a[href^="#"]').each(function () {
+    var href = this.getAttribute('href');
+    if (!href || href === '#') {
+      return;
+    }
+    var id = decodeURIComponent(href.slice(1));
+    var target = document.getElementById(id);
+    if (!target) {
+      return;
+    }
+    if (!byId[id]) {
+      byId[id] = { id: id, el: target, links: [] };
+      sections.push(byId[id]);
+    }
+    byId[id].links.push(this);
+  });
+
+  if (!sections.length) {
+    return;
+  }
+
+  function docTop(el) {
+    var r = el.getBoundingClientRect();
+    return r.top + window.pageYOffset;
+  }
+
+  sections.sort(function (a, b) {
+    return docTop(a.el) - docTop(b.el);
+  });
+
+  function headerOffset() {
+    var v = getComputedStyle(document.documentElement).getPropertyValue('--header-top-height');
+    var n = parseInt(v, 10);
+    return (24);
+  }
+
+  var raf = null;
+  function update() {
+    raf = null;
+    var y = window.pageYOffset + headerOffset();
+    var currentId = null;
+    var i;
+    for (i = sections.length - 1; i >= 0; i--) {
+      if (docTop(sections[i].el) <= y) {
+        currentId = sections[i].id;
+        break;
+      }
+    }
+
+    $roots.find('a.' + ACTIVE).removeClass(ACTIVE);
+    if (currentId !== null) {
+      for (i = 0; i < sections.length; i++) {
+        if (sections[i].id === currentId) {
+          $(sections[i].links).addClass(ACTIVE);
+          break;
+        }
+      }
+    }
+  }
+
+  function onScrollOrResize() {
+    if (raf !== null) {
+      return;
+    }
+    raf = window.requestAnimationFrame(update);
+  }
+
+  window.addEventListener('scroll', onScrollOrResize, { passive: true });
+  window.addEventListener('resize', onScrollOrResize);
+  window.addEventListener('hashchange', update);
+  update();
+}
 $(document).ready(function(){
+  initNcsLocalTocHeading();
+  initNcsLocalTocExpand();
+  initNcsLocalTocToolbar();
+  initNcsSidebarTocToolbar();
+  initNcsLocalTocScrollSpy();
+  /* Preserve sidebar scroll — same-page expand/collapse + cross-page navigation */
+  var $sideScroll = $('.wy-side-scroll');
+  var _sideScrollLockUntil = 0;
+  var _sideScrollSavedTop = 0;
+
+  // On load: restore previous page position and lock for 500ms so nothing overrides it.
+  (function () {
+    var saved = sessionStorage.getItem('ncs-sidebar-scroll');
+    if (saved !== null) {
+      _sideScrollSavedTop  = parseInt(saved, 10);
+      _sideScrollLockUntil = Date.now() + 500;
+      $sideScroll[0].scrollTop = _sideScrollSavedTop;
+    }
+  }());
+
+  // Capture phase — fires BEFORE theme.js stopPropagation on expand buttons.
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('.wy-menu-vertical')) {
+      _sideScrollSavedTop  = $sideScroll[0].scrollTop;
+      _sideScrollLockUntil = Date.now() + 300;
+      // Save immediately so it is fresh when the next page loads.
+      sessionStorage.setItem('ncs-sidebar-scroll', _sideScrollSavedTop);
+    }
+  }, true);
+
+  // Scroll listener — enforce lock, then persist normal user scroll.
+  $sideScroll[0].addEventListener('scroll', function () {
+    if (Date.now() < _sideScrollLockUntil) {
+      $sideScroll[0].scrollTop = _sideScrollSavedTop;
+    } else {
+      sessionStorage.setItem('ncs-sidebar-scroll', $sideScroll[0].scrollTop);
+    }
+  });
+
+  // Prevent full-page reload when clicking a link already on the current page.
+  $(document).on('click', '.wy-menu-vertical a', function (e) {
+    var a = document.createElement('a');
+    a.href = $(this).attr('href') || '';
+    if (a.pathname === window.location.pathname) {
+      e.preventDefault();
+    }
+  });
   window.NCS.updateLocations();
   window.NCS.hideSearchMatches();
 
