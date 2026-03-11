@@ -5,6 +5,9 @@
 ></script>
 <script src="{{ pathto('_static/js/bootstrap.bundle.min.js', 1) }}"></script>
 {% endblock %} {% block extrahead %}
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans:wght@300;400;700&display=swap" rel="stylesheet">
 <link
   href="{{ pathto('_static/css/bootstrap.min.css', 1) }}"
   rel="stylesheet"
@@ -54,7 +57,7 @@
 </div>
 <div class="d-print-none ncs-header">
   <div class="container-xl ncs-header-top">
-    <div class="row h-100">
+    <div class="row h-100 flex-nowrap">
       <div class="d-none d-md-block col-2">
         <div class="bg-white py-4 px-3 ml-2 ncs-header-logo">
           <img
@@ -65,21 +68,24 @@
         </div>
       </div>
       <div
-        class="col-8 col-md-7 pl-md-4 d-flex align-self-center justify-content-center"
-      >
-        <form class="w-75" action="{{ pathto('search') }}" method="get">
+      class="col-8 col-md-6 pr-md-3 d-flex flex-column align-self-center justify-content-start me-auto ncs-header-search-col"
+     >
+       <a href="{{ pathto(root_doc|default(master_doc)) }}" class="ncs-techdocs-logo-link d-block mb-2">
+         <img class="ncs-techdocs-logo" src="{{ pathto('_static/images/techdocs-logo.svg', 1) }}" alt="TechDocs" />
+       </a>
+       <form class="w-100" action="{{ pathto('search') }}" method="get">
           <div class="form-group">
             <input
               type="text"
               name="q"
               class="ncs-search-input form-control"
-              placeholder="Search all docs..."
+              placeholder="Search our developer documentation data"
             />
           </div>
         </form>
       </div>
       {%- if not theme_standalone|tobool %}
-      <div class="col-4 col-md-3 d-md-block p-3 text-end">
+      <div class="col-4 col-md-4 d-md-block px-3 py-3 ps-md-2 d-flex justify-content-end align-items-center flex-nowrap gap-3 ms-auto">
         <div class="dropdown">
           <button
             class="btn dropdown-toggle ncs-btn-versions"
@@ -87,16 +93,35 @@
             id="dropdownMenuButton1"
             data-bs-toggle="dropdown"
             aria-expanded="false"
-          >
-            <span class="d-none d-md-inline">nRF Connect SDK</span>
-            <span id="ncsversion" class="d-inline"></span>
+            >
+            <span class="ncs-btn-versions-label ncs-label-long">nRF Connect SDK</span>
+            <span class="ncs-btn-versions-label ncs-label-short">Versions</span>
+            <span id="ncsversion" class="ncs-btn-versions-version"></span>
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton"></div>
         </div>
+        {%- if theme_addons_url %}
+        <a href="{{ theme_addons_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn ncs-btn-header">
+       <span class="ncs-label-long">nRF Connect SDK Add-ons</span>
+       <span class="ncs-label-short">Add-ons</span>
+       </a>
+        {%- endif %}
+        {%- if theme_bare_metal_url %}
+        <a href="{{ theme_bare_metal_url }}"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn ncs-btn-header">
+      <span class="ncs-label-long">{{ theme_bare_metal_label | default('nRF Connect SDK Bare Metal') }}</span>
+      <span class="ncs-label-short">Bare Metal</span>
+      </a>
+        {%- endif %}
       </div>
-      {%- endif %}
     </div>
   </div>
+  {% endif %} 
   {%- if not theme_standalone|tobool %}
   <div class="ncs-header-nav">
     <div class="container-xl">
@@ -136,6 +161,49 @@
       </div>
     </div>
   </div>
-  {%- endif %}
-</div>
-{% endblock %}
+
+  {%- endif %}</div><div id="ncs-feedback-root" class="ncs-feedback-btn-placeholder" data-config-url="{{ pathto('_static/theme-config.json', 1) }}" data-page-title="{{ title | e }}" style="display: none;">  <a href="#" id="ncs-feedback-link" class="ncs-feedback-btn" title="Send feedback">    <span class="ncs-feedback-btn-icon" aria-hidden="true">★</span>    <span class="ncs-feedback-btn-text">Feedback</span>  </a></div><script>
+    (function () {
+      var root = document.getElementById('ncs-feedback-root');
+      if (!root) return;
+      var configUrl = root.getAttribute('data-config-url');
+      if (!configUrl) return;
+      if (configUrl.indexOf('http') !== 0) {
+        configUrl = configUrl.startsWith('/') 
+          ? (window.location.origin + configUrl) 
+          : configUrl;
+      }
+      var link = document.getElementById('ncs-feedback-link');
+      if (!link) return;
+    
+
+    
+      fetch(configUrl, { cache: 'default' })
+        .then(function (res) { return res.ok ? res.json() : Promise.reject(); })
+        .then(function (config) {
+          if (!config.feedback_email) return;
+          var pageTitle = root.getAttribute('data-page-title') || document.title || '';
+          var prefix = 'Customer Feedback - Nordic Developer Documentation Portal: ';
+          var subject = prefix + (pageTitle || 'No title');
+          var pageUrl = window.location.href;
+          var pageTitle = root.getAttribute('data-page-title') || document.title || 'No title';
+          var body = 'Topic is: ' + pageTitle + '\n\nYour comment is: \n\nThis is page URL: ' + pageUrl;
+    
+          var mailto = 'mailto:' + encodeURIComponent(config.feedback_email);
+          var params = [];
+          params.push('subject=' + encodeURIComponent(subject));
+          params.push('body=' + encodeURIComponent(body));
+          mailto += '?' + params.join('&');
+    
+          link.href = mailto;
+          root.style.display = '';
+          link.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (link.href && link.href.indexOf('mailto:') === 0) {
+              window.location.href = link.href;
+            }
+          });
+        })
+        .catch(function () {});
+    })();
+    </script>{% endblock %}
