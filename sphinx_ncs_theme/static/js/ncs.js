@@ -19,9 +19,19 @@ function NCS () {
       this.url_root = window.location.protocol + "//" + host + "/";
       this.version_data_url = this.url_root + "versions.json";
     } else {
-      // New URL structure: https://domain.x/latest/nrf/index.html
-      this.url_prefix = "/";
-      this.url_root = window.location.protocol + "//" + host + "/";
+      // Detect project prefix from path (e.g. /ncs/, /ncs-bm/, /addons/)
+      // by finding the first segment that is a version or "latest".
+      const segments = window.location.pathname.split("/").filter(Boolean);
+      let prefix = "/";
+      for (let i = 0; i < segments.length; i++) {
+        if (segments[i] === "latest" || STABLE_VERSION_RE.test(segments[i]) ||
+            DEV_VERSION_RE.test(segments[i])) {
+          break;
+        }
+        prefix += segments[i] + "/";
+      }
+      this.url_prefix = prefix;
+      this.url_root = window.location.protocol + "//" + host + prefix;
       this.version_data_url = this.url_root + "latest/versions.json";
     }
   };
