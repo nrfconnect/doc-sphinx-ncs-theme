@@ -143,7 +143,7 @@ function NCS () {
     ncs.findCurrentVersion();
     ncs.findCurrentPage();
     ncs.updateVersionDropDown();
-    ncs.showVersion();
+  /*ncs.showVersion();*/
   };
 
   const NCS_SESSION_KEY = "ncs";
@@ -413,6 +413,15 @@ function initNcsSidebarTocToolbar() {
       .find('li')
       .filter(function () {
         return $(this).children('ul').length > 0;
+      })
+      .addClass('current')
+      .attr('aria-expanded', 'true');
+    // Top-level leaf ToC rows (no nested <ul>): same .current styling as branches
+    $menu
+      .children('ul')
+      .children('li')
+      .filter(function () {
+        return $(this).children('ul').length === 0;
       })
       .addClass('current')
       .attr('aria-expanded', 'true');
