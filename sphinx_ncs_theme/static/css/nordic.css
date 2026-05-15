@@ -430,12 +430,12 @@ kbd {
 .ncs-header-top .row > .col-md-6 {
   justify-content: flex-start !important;
   padding-left: 0 !important;
-  margin-left: -11rem !important;
+  margin-left: -1rem !important;
 }
 .ncs-header-top .row > .col-8 form,
 .ncs-header-top .row > .col-md-6 form {
   margin-left: 0 !important;
-  margin-right: auto !important;
+  /* margin-right: auto !important; */
   width: 100%;
   max-width: 100%;
 }
@@ -455,10 +455,10 @@ kbd {
 .ncs-header-top .row > .col-8 .form-control,
 .ncs-header-top .row > .col-md-6 .ncs-search-input,
 .ncs-header-top .row > .col-md-6 .form-control {
-  max-width: 100%;
+  max-width: 98%;
   box-sizing: border-box;
-  min-width: 12rem;
-  margin-left: 0.25rem;
+  /* min-width: 50rem; */
+  margin-left: 0.35rem;
 }
 
 /* Logo image: constrained to header, same look as docs.nordicsemi.com */
@@ -645,14 +645,25 @@ kbd {
 @media screen and (max-width: 1999px) {
   .ncs-header-top .row > .col-4 .dropdown,
   .ncs-header-top .row > .col-md-4 .dropdown {
-    margin-right: 0.75rem;
+    margin-right: 0;
   }
 }
 .ncs-header-top .row > .col-md-4.d-flex > .dropdown {
-  margin-right: -62px;
+  /*margin-right: -62px;*/
+  margin-right: 5px;
 }
 .ncs-header-top .ncs-btn-versions {
   margin-right: 0;
+}
+/* Versions dropdown: wrapper/menu match toggle width */
+.ncs-header-top .dropdown:has(.ncs-btn-versions) {
+  width: fit-content;
+  max-width: 100%;
+}
+.ncs-header-top .dropdown:has(.ncs-btn-versions) .dropdown-menu {
+  width: 100%;
+  min-width: fit-content;
+  box-sizing: border-box;
 }
 .ncs-btn-header:hover {
   background-color: #e0f4f9 !important;
@@ -702,11 +713,12 @@ kbd {
     min-width: 45rem;
     max-width: fit-content !important;
     box-sizing: border-box;
-    margin-left: -0.25rem !important;
+    margin-left: -1.25rem !important;
   }
   .ncs-search-input,
   .ncs-search-input:focus {
   font-size: 0.875rem !important;   /* 14px; use 0.8125rem for 13px if you want even more room */
+  /* width: 100% !important; */
   }
 
   .ncs-btn-versions,
@@ -725,7 +737,7 @@ kbd {
   }
 }
 /* Button labels: long text when in a row (≥1680px), short when stacked or smaller (≤1679px) */
-@media screen and (min-width: 1680px) {
+@media screen and (min-width: 1200px) {
   .ncs-header-top .ncs-label-short {
     display: none !important;
   }
@@ -735,16 +747,16 @@ kbd {
 }
 @media screen and (max-width: 1679px) {
   .ncs-header-top .ncs-label-long {
-    display: none !important;
+    display: inline!important;
   }
   .ncs-header-top .ncs-label-short {
-    display: inline;
+    display: none;
   }
 }
 /* From 1199px: buttons on the right, natural width */
 @media screen and (min-width: 1199px) {
   .ncs-header-top .row > .col-8 form {
-    max-width: 100%;
+    /* max-width: 96% !important; */
   }
   .ncs-header-top .dropdown,
   .ncs-header-top .ncs-btn-header {
@@ -758,6 +770,7 @@ kbd {
   .ncs-header-top .row > .col-4.d-flex,
   .ncs-header-top .row > .col-md-4.d-flex {
     justify-content: flex-end !important;
+    gap: 8px !important;
   }
   .ncs-header-top .dropdown {
     width: auto !important;
@@ -771,10 +784,10 @@ kbd {
   
 }
 /* Keep search bar from shrinking so buttons stay to the right of it (no overlap) */
-@media screen and (min-width: 1200px) {
+@media screen and (min-width: 1550px) {
   .ncs-header-top .row > .col-8,
   .ncs-header-top .row > .col-md-6 {
-    min-width: 12rem;
+    min-width: 8rem;
     max-width: 50rem;
   }
 }
@@ -783,12 +796,12 @@ kbd {
   .ncs-header-top .row > .col-4,
   .ncs-header-top .row > .col-md-4 {
     align-self: center !important;
-    margin-top: 3.35rem !important;
+    margin-top: 51px!important;
   }
 }
 
 /* From 1680px: 3 buttons in one row at the rightmost end; shrink with ellipsis when needed */
-@media screen and (min-width: 1680px) {
+@media screen and (min-width: 2000px) {
   .ncs-header-top .row > .col-8,
   .ncs-header-top .row > .col-md-6 {
     margin-left: auto !important;
@@ -801,13 +814,13 @@ kbd {
   .ncs-header-top .row > .col-md-4 {
     min-width: 0;
     max-width: 50%;
-    overflow: hidden;
+    overflow: visible;
     margin-left: auto;
     margin-right: 0;
   }
   .ncs-header-top .row .col-4.d-flex,
   .ncs-header-top .row .col-md-4.d-flex {
-    /*width: 100%;*/
+    /* width: 100%; */
     /*flex-wrap: wrap;*/
     gap: 0.75rem !important;
     justify-content: center !important;
@@ -815,23 +828,23 @@ kbd {
   .ncs-header-top .row > .col-md-4.d-flex .dropdown,
   .ncs-header-top .row > .col-md-4.d-flex .ncs-btn-header {
     flex-shrink: 1 !important;
-    min-width: 10rem !important;
+    min-width: 10.5rem !important;
     max-width: 100%;
   }
   .ncs-header-top .row > .col-md-4 .dropdown .ncs-btn-versions,
   .ncs-header-top .row > .col-md-4 .ncs-btn-header {
-    min-width: 0 !important;
+    min-width: 10rem !important;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 }
 /* 1200px–1679px: same row, but buttons stack in 3 rows on the right; ≥1680px = 3 buttons in one row */
-@media screen and (max-width: 1886px) and (min-width: 1200px) {
+@media screen and (max-width: 1886px) and (min-width: 1550) {
   .ncs-header-top .row > .col-8,
   .ncs-header-top .row > .col-md-6 {
-    margin-left: 0 !important;
+    margin-left: -6px !important;
     min-width: 0 !important;
-    max-width: 100%;
+    /*max-width: 100%;*/
   }
   .ncs-header-top .row > .col-8 .ncs-search-input,
   .ncs-header-top .row > .col-8 .form-control,
@@ -841,33 +854,37 @@ kbd {
   }
   .ncs-header-top .row .col-4.d-flex,
   .ncs-header-top .row .col-md-4.d-flex {
-    flex-direction: column !important;
+    flex-direction: row !important;
     flex-wrap: nowrap !important;
     align-items: stretch !important;
     align-self: flex-start;
-    margin-right: 12rem;
+    /*margin-right: 12rem;*/
     /*justify-content: flex-start;*/
-    gap: 0.25rem !important;
+    gap: 10px !important;
     min-width: 0;
     max-width: 100%;
-    width:20%;
+    /*width:20%;*/
     padding-bottom: 3.5rem !important;
+    margin-top:90px !important;
+    margin-left: -11px;
   }
   .ncs-header-top .row > .col-md-4 .dropdown,
   .ncs-header-top .row > .col-md-4 .ncs-btn-header {
-    width: 100%;
+    /*width: 100%;*/
     min-width: 0;
     flex-shrink: 0;
     box-sizing: border-box;
+    margin-right:10px !important;
   }
-  .ncs-header-top .row > .col-md-4 .dropdown {
+  /*.ncs-header-top .row > .col-md-4 .dropdown {
     width: 100% !important;
-  }
+  }*/
   .ncs-header-top .row > .col-md-4 .dropdown .ncs-btn-versions {
     width: 100% !important;
     box-sizing: border-box;
     justify-content: center;
     text-align: center;
+    min-width:10rem;
   }
 }
 /* Keep header search + buttons on one line until very small screens 
@@ -939,15 +956,15 @@ kbd {
   .ncs-header-top .row > .col-4.d-flex,
   .ncs-header-top .row > .col-md-4.d-flex {
     min-width: 0 !important;
-    max-width: 33.5% !important;
+    max-width: 33% !important;
     padding-top: .5rem !important;
-    padding-bottom: 2px !important;  
-
+    padding-bottom: 2px !important;
+    margin-right: 11px;
   }
   .ncs-header-top .row > .col-md-4 .dropdown,
   .ncs-header-top .row > .col-md-4 .ncs-btn-header {
     flex: 0 0 auto;
-    min-width: 0;
+    min-width: 100%;
     max-width: 100%;
     margin-right: 0px !important;
   }
@@ -1368,7 +1385,7 @@ kbd {
 .wy-side-scroll::-webkit-scrollbar,
 .wy-nav-content-wrap::-webkit-scrollbar,
 .wy-nav-content::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 .wy-side-scroll::-webkit-scrollbar-thumb,
 .wy-nav-content-wrap::-webkit-scrollbar-thumb,
@@ -1481,7 +1498,7 @@ div[role="navigation"] hr {
   margin-top: 0.5rem;
   margin-bottom: 0.5rem;
   /* Bleed into .wy-nav-content horizontal padding (must match that rule) */
-  margin-left: -3em;
+  margin-left: -2em;
   margin-right: calc(-1 * max(2em, 4.5rem));
   width: calc(100% + 2em + max(2em, 4.5rem));
   max-width: none;
@@ -2485,11 +2502,14 @@ nav.contents.local .ncs-local-toc-tool .ncs-local-toc-icon {
   justify-content: center;
   gap: 0px;
   line-height: 1;
-  flex-shrink: 0;
+  /*flex-shrink: 0;*/
 }
 .wy-side-scroll .ncs-sidebar-toc-btn .ncs-local-toc-guillemet {
   display: block;
-  font-size: 1.1rem;
+  font-size: 1em;
+  gap:3px;
+  align-items:center;
+  justify-content:center;
   line-height: 1;
   color: #000;
 }
@@ -2498,15 +2518,15 @@ nav.contents.local .ncs-local-toc-tool .ncs-local-toc-icon {
   color: #0077c8;
 }
 .wy-side-scroll .ncs-sidebar-toc-btn .ncs-local-toc-guillemet--up {
-  transform: rotate(-90deg) translateY(1.5px);
+  transform: rotate(-90deg);
   transform-origin: center;
 }
 .wy-side-scroll .ncs-sidebar-toc-btn .ncs-local-toc-guillemet--down {
-  transform: rotate(90deg) translateY(-4.45px);
+  transform: rotate(90deg)  translateY(-5px);
   transform-origin: center;
 }
 .wy-side-scroll .ncs-sidebar-toc-btn .ncs-local-toc-guillemet + .ncs-local-toc-guillemet {
-  margin-top: -10px;
+  margin-top: -13px;
 }
 .wy-side-scroll span.ncs-sidebar-toc-btn__label {
   font-size: 14px;
@@ -3257,4 +3277,79 @@ span.guilabel {
 }
 .rst-content table.docutils td code {
   border: 1px solid #dae2e3 !important;
+}
+
+@media screen and (min-width: 1550px) {
+  .ncs-header-top .row > .col-md-6,
+  .ncs-header-top .row > .col-8 {
+    flex: 1 1 0%;
+    min-width: 0;
+    max-width: none; /* relax 50rem cap from ~785–790 if still present */
+  }
+
+  .ncs-header-top .row > .col-md-6 .ncs-search-input,
+  .ncs-header-top .row > .col-md-6 .form-control {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0; /* overrides 12rem */
+  }
+
+  .ncs-header-top .row > .col-md-4.d-flex {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+  }
+
+  .ncs-header-top .dropdown,
+  .ncs-header-top .ncs-btn-header {
+    flex-shrink: 0; /* keep long text readable; already partly at ~756 */
+  }
+}
+.ncs-header-top .row > .col-md-6 form {
+  max-width: min(100%, clamp(10rem, 30vw, 42rem));
+}
+
+/* Short labels while search + buttons share one row, 1200px–1400px */
+@media screen and (min-width: 1200px) and (max-width: 1500px) {
+  .ncs-header-top .ncs-label-long {
+    display: none!important;
+  }
+  .ncs-header-top .ncs-label-short {
+    display: inline!important;
+  }
+}
+@media screen and (max-width: 1199px) {
+  /* Let form + input use full column width (beats clamp at end of file) */
+  .ncs-header-top .row > .col-md-6 form,
+  .ncs-header-top .row > .col-8 form {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Widen button row so search can match it */
+  .ncs-header-top .row > .col-md-4.d-flex,
+  .ncs-header-top .row > .col-4.d-flex {
+    width: 100% !important;
+    max-width: 100% !important;
+    align-self: center;
+  }
+
+  .ncs-header-top .row > .col-md-4 .dropdown,
+  .ncs-header-top .row > .col-md-4 .ncs-btn-header {
+    width: 32%!important;
+    min-width: auto !important;
+    max-width: none !important;
+  }
+
+  /* Search column: as wide as content / button row, centered */
+  .ncs-header-top .row > .col-md-6.ncs-header-search-col,
+  .ncs-header-top .row > .col-8.ncs-header-search-col {
+    /* width: 50% !important; */
+    max-width: 100% !important;
+    align-self: center !important;
+    /* justify-items: center; */
+    /* margin-left: 235px !important; */
+    min-width: min(100%, 28rem); /* optional floor; tune or remove */
+  }
+
+
 }
