@@ -19,7 +19,7 @@ function NCS () {
       this.url_root = window.location.protocol + "//" + host + "/";
       this.version_data_url = this.url_root + "versions.json";
     } else {
-      // Detect project prefix from path (e.g. /ncs/, /ncs-bm/, /addons/)
+      // Detect project prefix from path (e.g. /ncs/, /ncs-bm/, /addons/ )
       // by finding the first segment that is a version or "latest".
       const segments = window.location.pathname.split("/").filter(Boolean);
       let prefix = "/";
