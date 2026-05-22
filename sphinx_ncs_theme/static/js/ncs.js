@@ -146,29 +146,6 @@ function NCS () {
   /*ncs.showVersion();*/
   };
 
-  const NCS_SESSION_KEY = "ncs";
-
-  /*
-   * Load a versions.json from the session cache if available
-   */
-  state.loadVersions = function() {
-    let versions_data = window.sessionStorage.getItem(NCS_SESSION_KEY);
-    if (versions_data) {
-      window.NCS.versions = JSON.parse(versions_data);
-      return true;
-    }
-    return false;
-  }
-
-  /*
-   * Update the session cache with a new versions.json
-   */
-  state.saveVersions = function(versions_data) {
-    const session_value = JSON.stringify(versions_data);
-    window.sessionStorage.setItem(NCS_SESSION_KEY, session_value);
-    window.NCS.versions = versions_data;
-  }
-
   /*
    * When the "Hide Search Matches" (from Sphinx's doctools) link is clicked,
    * rewrite the URL to remove the search term.
@@ -574,13 +551,23 @@ $(document).ready(function(){
   window.NCS.updateLocations();
   window.NCS.hideSearchMatches();
 
-  if (window.NCS.loadVersions()) {
-    window.NCS.updatePage();
-  } else {
-    /* Get versions file from remote server. */
-    $.getJSON(window.NCS.version_data_url, function(json_data) {
-      window.NCS.saveVersions(json_data);
+  /* Always fetch versions.json fresh on each page load.
+   * The file is small (~200 B); HTTP cache handles within-session
+   * repeats. This avoids stale dropdown content when versions.json
+   * is updated and ensures each docset (NCS / BM / addons) sees its
+   * own version list (no shared sessionStorage between products on
+   * the same origin). */
+  $.getJSON(window.NCS.version_data_url)
+    .done(function(json_data) {
+      window.NCS.versions = json_data;
       window.NCS.updatePage();
+    })
+    .fail(function(jqXHR, status, err) {
+      console.warn(
+        "NCS version switcher: failed to load",
+        window.NCS.version_data_url,
+        "status:", jqXHR.status, status, err
+      );
+      $("#ncsversion").text("(versions unavailable)");
     });
-  }
 });
