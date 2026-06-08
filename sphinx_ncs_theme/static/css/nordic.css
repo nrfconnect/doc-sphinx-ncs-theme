@@ -9,9 +9,6 @@ body, html {
   overflow-x: clip;
   font-family: "Noto Sans", "Carlito", sans-serif !important;
 }
-:root {
-  --ncs-right-toc-width: 210px; /* match .contents.local width */
-}
 @supports not (overflow: clip) {
   body, html {
     overflow-x: hidden;
@@ -1852,6 +1849,15 @@ legend {
 .rst-content .admonition.note > p:not(.admonition-title):last-of-type {
   margin-bottom: 0 !important;
 }
+.rst-content .admonition ul,
+.rst-content .admonition ol {
+  padding-left: 1.5em !important;
+  margin-left: 0.25em;
+}
+
+.rst-content .admonition li > p {
+  max-width: none !important;
+}
 /* Space between list items in a note */
 .rst-content .admonition.note ul > li + li,
 .rst-content .admonition.note ol > li + li {
@@ -2791,8 +2797,8 @@ nav.contents.local a.ncs-toc-active span.pre {
   .rst-content:has(.contents.local) figure,
   .rst-content:has(nav.contents.local) .figure,
   .rst-content:has(nav.contents.local) figure,
-  .rst-content:has(.contents.local) .align-center,
-  .rst-content:has(nav.contents.local) .align-center {
+  .rst-content:has(.contents.local) .align-center:not(table),
+  .rst-content:has(nav.contents.local) .align-center:not(table) {
     max-width: calc(100% - var(--ncs-right-toc-width) - 3rem);
     box-sizing: border-box;
   }
@@ -3107,7 +3113,7 @@ span.guilabel {
 }
 
 #scroll-btn {
-  background-color: #2D363E;
+  /*background-color: #2D363E;
   box-shadow: none;
   color: #fff;
   visibility: hidden;
@@ -3117,11 +3123,30 @@ span.guilabel {
   z-index: 20;
   border-radius: 50%;
   height: 50px;
-  width: 50px;
+  width: 50px;*/
+  position: fixed;
+  bottom: calc(2rem + 56px + 12px);
+  right: 0.25rem;
+  z-index: 21;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  border: 0.5px solid #72cee2;
+  background: linear-gradient(135deg, #0195c6 21% 21%, #d1f7ff 92%);
+  /* color: #00a9ce; */
+  /* fill: aquamarine; */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  visibility: hidden;
 }
 #scroll-btn svg {
-  fill: #ffffff;
-  filter: brightness(1.15);
+  /*fill: #ffffff;
+  filter: brightness(1.15);*/
+  fill: #0080c7 !important;
+  filter: none;
 }
 /* Site-level feedback button (vertical, fixed on right) */
 .ncs-feedback-btn-placeholder {
@@ -3205,10 +3230,10 @@ span.guilabel {
   .rst-content .sphinx-tabs .wy-table-responsive {
     display: block;
     width: 100%;
-    max-width: none;
+    max-width: calc(100% - var(--ncs-right-toc-width) - 3rem);
+    margin: 0 !important;
     overflow-x: visible;
-    -webkit-overflow-scrolling: auto;
-    overscroll-behavior-x: auto;
+    padding-top: 10px;
   }
 
 /* Tables: align with tab strip (same left edge as tab labels) */
@@ -3226,7 +3251,13 @@ span.guilabel {
   -webkit-overflow-scrolling: auto;
   overscroll-behavior-x: auto;
 }
-
+/* Table fills wrapper; gutter only on .wy-table-responsive */
+.rst-content .wy-table-responsive table.docutils,
+.rst-content .wy-table-responsive table.docutils.align-center {
+  max-width: 100%;
+  width: 100%;
+  box-sizing: border-box;
+}
 .rst-content table.docutils {
   /*width: auto !important;*/
   /*max-width: 100%;*/
@@ -3352,4 +3383,172 @@ span.guilabel {
   }
 
 
+}
+div#__kconfig-search .search-tools {
+  display: block;
+}
+
+/* Hidden panels: force out of layout (Firefox nested tabs) */
+.rst-content .sphinx-tabs-panel[hidden] {
+  display: none !important;
+  height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: 0 !important;
+}
+/* Visible panels: remove gap above table */
+.rst-content .sphinx-tabs-panel {
+  padding: 0 !important;
+  margin: 0 !important;
+  border: none !important;
+}
+/* Header: Expand/Collapse left, hide button right */
+.wy-side-scroll .ncs-sidebar-toc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+  width: 100%;
+  box-sizing: border-box;
+  padding-right: 0.25rem;
+}
+
+.wy-side-scroll .ncs-sidebar-toc-header .ncs-local-toc-toolbar {
+  flex-shrink: 1;
+  min-width: 0;
+  margin-left: 10px;
+}
+
+/* ‹ button — matches your screenshot */
+.wy-side-scroll .ncs-sidebar-panel-toggle {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #fff;
+  color: #333f48;
+  cursor: pointer;
+}
+
+.wy-side-scroll .ncs-sidebar-panel-toggle:hover {
+  background: #e6f6f9;
+  border-color: #00a9ce;
+  color: #00a9ce;
+}
+
+/* › reopen — inline before breadcrumbs when sidebar collapsed */
+.ncs-sidebar-reopen {
+  display: none;
+  width: 28px;
+  height: 28px;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  background: #fff;
+  color: #333f48;
+  cursor: pointer;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.ncs-sidebar-reopen:hover,
+.ncs-sidebar-reopen:focus-visible {
+  background: #e6f6f9;
+  border-color: #00a9ce;
+  color: #00a9ce;
+  outline: none;
+}
+
+@media screen and (min-width: 1000px) {
+  html.ncs-left-nav-collapsed .wy-nav-side {
+    display: none !important;
+  }
+
+  html.ncs-left-nav-collapsed .wy-nav-content-wrap {
+    flex: 1 1 100% !important;
+    max-width: 100% !important;
+  }
+
+  /* Button + breadcrumbs on one row */
+  html.ncs-left-nav-collapsed .ncs-sidebar-reopen {
+    display: inline-flex;
+    float: left;
+    margin: 0 0.75rem 0 0;
+  }
+
+  html.ncs-left-nav-collapsed .wy-nav-content > [role="navigation"] {
+    overflow: hidden; /* contain floated button */
+  }
+
+  /* Optional: tighter left edge like reference */
+  html.ncs-left-nav-collapsed .wy-nav-content {
+    padding-left: 0.75rem !important;
+  }
+}
+
+@media screen and (max-width: 999px) {
+  .ncs-sidebar-panel-toggle,
+  .ncs-sidebar-reopen {
+    display: none !important;
+  }
+}
+:root {
+  --ncs-right-toc-width: 0px;
+}
+
+/* Only reserve space when the page has a right local ToC */
+.rst-content:has(.contents.local),
+.rst-content:has(nav.contents.local) {
+  --ncs-right-toc-width: 210px;
+}
+@media screen and (max-width: 999px) {
+  /* Stop reserving space for hidden right TOC */
+  .rst-content:has(.contents.local),
+  .rst-content:has(nav.contents.local) {
+    --ncs-right-toc-width: 0px;
+  }
+
+  /* Full width on mobile */
+  .rst-content [role="tablist"],
+  .rst-content .toggle-details,
+  .rst-content .toggle-details > summary {
+    max-width: 100%;
+  }
+}
+.rst-content .toggle-details {
+  max-width: none;  /* not calc(...) */
+}
+
+.rst-content .toggle-details > summary {
+  max-width: calc(100% - var(--ncs-right-toc-width) - 3rem);
+}
+
+/* After whole tabs block */
+.rst-content .sphinx-tabs + .line-block,
+
+/* Inside tab panel, after table */
+.rst-content .sphinx-tabs-panel .wy-table-responsive + .line-block,
+
+/* After plain table, no tabs */
+.rst-content .wy-table-responsive + .line-block {
+  max-width: calc(100% - var(--ncs-right-toc-width) - 3rem);
+  box-sizing: border-box;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.rst-content .sphinx-tabs + .line-block .line,
+.rst-content .sphinx-tabs-panel .wy-table-responsive + .line-block .line,
+.rst-content .wy-table-responsive + .line-block .line {
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }

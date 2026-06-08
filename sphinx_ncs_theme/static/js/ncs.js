@@ -316,6 +316,60 @@ function initNcsLocalTocToolbar() {
     mount($(this));
   });
 }
+function initNcsSidebarPanelToggle($header) {
+  if (!$header || !$header.length || $header.find('.ncs-sidebar-panel-toggle').length) {
+    return;
+  }
+
+  var chevronLeft =
+    '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path fill="currentColor" d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>';
+  var chevronRight =
+    '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true">' +
+    '<path fill="currentColor" d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/></svg>';
+
+  var $hideBtn = $('<button type="button" class="ncs-sidebar-panel-toggle"></button>')
+    .attr('title', 'Hide navigation')
+    .attr('aria-label', 'Hide navigation')
+    .attr('aria-expanded', 'true')
+    .html(chevronLeft);
+
+  $header.append($hideBtn);
+
+  var $reopenBtn = $('<button type="button" class="ncs-sidebar-reopen"></button>')
+    .attr('title', 'Show table of contents')
+    .attr('aria-label', 'Show table of contents')
+    .attr('aria-expanded', 'false')
+    .html(chevronRight);
+
+  var $crumbNav = $('.wy-nav-content > [role="navigation"]').first();
+  if ($crumbNav.length) {
+    $reopenBtn.hide().insertBefore($crumbNav);
+  } else {
+    $reopenBtn.hide().prependTo('.wy-nav-content');
+  }
+
+  function setCollapsed(collapsed) {
+    $('html').toggleClass('ncs-left-nav-collapsed', collapsed);
+    $hideBtn.attr('aria-expanded', collapsed ? 'false' : 'true');
+    $reopenBtn.attr('aria-expanded', collapsed ? 'true' : 'false');
+    $reopenBtn.toggle(collapsed);
+    try {
+      localStorage.setItem('ncs-left-nav-collapsed', collapsed ? '1' : '0');
+    } catch (e) {}
+  }
+
+  $hideBtn.on('click', function () { setCollapsed(true); });
+  $reopenBtn.on('click', function () { setCollapsed(false); });
+
+  try {
+    if (localStorage.getItem('ncs-left-nav-collapsed') === '1') {
+      setCollapsed(true);
+    }
+  } catch (e) {}
+}
+
+
 /**
  * Left sidebar global ToC: expand/collapse all (same controls as right local ToC).
  * Inserts a bar above .wy-menu-vertical; uses li.current + .toctree-expand like theme.js.
@@ -384,7 +438,7 @@ function initNcsSidebarTocToolbar() {
   $toolbar.append($g1, $g2);
   $header.append($toolbar);
   $menu.before($header);
-
+  initNcsSidebarPanelToggle($header);
   $expandAll.on('click', function () {
     $menu
       .find('li')
