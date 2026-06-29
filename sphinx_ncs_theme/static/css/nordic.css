@@ -3126,10 +3126,10 @@ span.guilabel {
   width: 50px;*/
   position: fixed;
   bottom: calc(2rem + 56px + 12px);
-  right: 0.25rem;
+  right: 2.25rem;
   z-index: 21;
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 8px;
   border: 0.5px solid #72cee2;
   background: linear-gradient(135deg, #0195c6 21% 21%, #d1f7ff 92%);
