@@ -5,7 +5,9 @@ function NCS () {
 
   // XXX: do not remove the trailing '/'
   const STABLE_VERSION_RE = /^(\d+\.)+\d+$/;
-  const DEV_VERSION_RE = /^(\d+\.)+\d+-[a-z0-9]+$/;
+  // Pre-release suffix follows semver: dot- or dash-separated identifiers,
+  // e.g. "1.0.99-preview-thread-hdr", "2.7.0-rc.1".
+  const DEV_VERSION_RE = /^(\d+\.)+\d+-[a-z0-9]+([.-][a-z0-9]+)*$/i;
   const LOCALHOST_RE = /^(localhost)|(0\.0\.0\.0)|((\d{1,3}\.){3}\d{1,3}):\d{4,5}/
 
   /*
