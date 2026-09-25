@@ -3271,6 +3271,17 @@ span.guilabel {
   width: 100%;
   box-sizing: border-box;
 }
+
+/* SoC maturity table: shrink to content instead of full content width */
+.rst-content .wy-table-responsive:has(table.soc-maturity-table) {
+  width: fit-content;
+  max-width: calc(100% - var(--ncs-right-toc-width) - 3rem);
+}
+
+.rst-content table.docutils.soc-maturity-table {
+  width: auto !important;
+  table-layout: auto;
+}
 .rst-content table.docutils {
   /*width: auto !important;*/
   /*max-width: 100%;*/
