@@ -348,7 +348,7 @@ kbd {
   }*/
 
 
-  @media screen and (max-width: 999px) {
+  @media screen and (max-width: 999.98px) {
     .wy-nav-side {
       position: fixed;
     }
@@ -374,7 +374,7 @@ kbd {
   --header-top-height: 150px;
 }
 
-@media (max-width: 767px) {
+@media (max-width: 767.98px) {
   :root {
     --header-top-height: 100px;
   }
@@ -515,7 +515,7 @@ kbd {
   box-shadow: none;
 }
 /* Shrink TechDocs logo at lower sizes so buttons stay visible */
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1199.98px) {
   .ncs-header-top .ncs-techdocs-logo {
     height: 36px;
   }
@@ -531,7 +531,7 @@ kbd {
     margin-bottom: 0.15rem !important;
   }
 }
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 576.98px) {
   .ncs-header-top .ncs-techdocs-logo {
     height: 18px;
   }
@@ -653,7 +653,7 @@ kbd {
   margin-left: -1px;
 }
 
-@media screen and (max-width: 1999px) {
+@media screen and (max-width: 1999.98px) {
   .ncs-header-top .row > .col-4 .dropdown,
   .ncs-header-top .row > .col-md-4 .dropdown {
     margin-right: 0;
@@ -708,8 +708,8 @@ kbd {
   max-width: 100%;
 }
 
-/* Responsive: allow buttons to shrink and wrap; above 1198px use right-aligned layout */
-@media screen and (max-width: 1198px) {
+/* Responsive: allow buttons to shrink and wrap; from 1200px use right-aligned layout */
+@media screen and (max-width: 1199.98px) {
   .ncs-header-top .dropdown .ncs-btn-versions,
   .ncs-header-top .ncs-btn-header {
     width: 100%;
@@ -764,8 +764,8 @@ kbd {
     display: none;
   }
 }
-/* From 1199px: buttons on the right, natural width */
-@media screen and (min-width: 1199px) {
+/* From 1200px: buttons on the right, natural width */
+@media screen and (min-width: 1200px) {
   .ncs-header-top .row > .col-8 form {
     /* max-width: 96% !important; */
   }
@@ -899,7 +899,7 @@ kbd {
   }
 }
 /* Keep header search + buttons on one line until very small screens 
-@media screen and (max-width: 767px) and (min-width: 577px) {
+@media screen and (max-width: 767.98px) and (min-width: 577px) {
   .ncs-header-top .row {
     flex-direction: row !important;
     flex-wrap: nowrap !important;
@@ -911,12 +911,12 @@ kbd {
   }
 }*/
 /* Below 1200px: search on first row, then three buttons stacked (3 rows) */
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1199.98px) {
   .ncs-header-top .row > .col-2 {
     min-height: 160px;
     margin-right: -10rem;
   }
-  @media screen and (max-width: 767px) {
+  @media screen and (max-width: 767.98px) {
     .ncs-header-top .row > .col-2 {
       margin-right: 0 !important;
     }
@@ -993,8 +993,8 @@ kbd {
   }
 }
 /* When doc set tabs are collapsed (<992px): push search + buttons down, keep logo 42px */
-@media screen and (max-width: 991px) {
-  @media screen and (max-width: 991px) and (min-width: 768px) {
+@media screen and (max-width: 991.98px) {
+  @media screen and (max-width: 991.98px) and (min-width: 768px) {
     :root {
       --header-top-height: 180px;
     }
@@ -1016,7 +1016,7 @@ kbd {
   }
 }
 /* 768px–1199px: logo visible in stacked layout; keep search and buttons to the right of it */
-@media screen and (max-width: 1199px) and (min-width: 768px) {
+@media screen and (max-width: 1199.98px) and (min-width: 768px) {
   .ncs-header-top .row > .col-2 {
     margin-right: 0 !important;
     margin-left: 0 !important;   /* optional: ensure no negative left */
@@ -1042,14 +1042,14 @@ kbd {
   }
 }
 /* 892px–1199px: search bar same width as button row */
-@media screen and (max-width: 1199px) and (min-width: 892px) {
+@media screen and (max-width: 1199.98px) and (min-width: 892px) {
   .ncs-header-top .row > .col-8,
   .ncs-header-top .row > .col-md-6 {
     max-width: 100% !important;
   }
 }
 /* Small screens: search + buttons stacked, left-aligned, same width */
-@media screen and (max-width: 576px) {
+@media screen and (max-width: 576.98px) {
   .ncs-header-top .row {
     flex-direction: column;
     align-items: flex-start;
@@ -1152,13 +1152,13 @@ kbd {
   position: static;
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 999.98px) {
   .wy-nav-side {
     width: 0px;
     position: static !important;
   }
 }
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 999.98px) {
   .wy-nav-top {
     display: block !important;
   }
@@ -2763,7 +2763,7 @@ nav.contents.local a.ncs-toc-active span.pre {
   max-width: calc(100% - var(--local-toc-gutter));
   box-sizing: border-box;
 }*/
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 999.98px) {
   nav.contents.local,
   .contents.local {
     display: none !important;
@@ -3369,7 +3369,7 @@ span.guilabel {
     display: inline!important;
   }
 }
-@media screen and (max-width: 1199px) {
+@media screen and (max-width: 1199.98px) {
   /* Let form + input use full column width (beats clamp at end of file) */
   .ncs-header-top .row > .col-md-6 form,
   .ncs-header-top .row > .col-8 form {
@@ -3515,7 +3515,7 @@ div#__kconfig-search .search-tools {
   }
 }
 
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 999.98px) {
   .ncs-sidebar-panel-toggle,
   .ncs-sidebar-reopen {
     display: none !important;
@@ -3541,7 +3541,7 @@ div#__kconfig-search .search-tools {
 .rst-content .rst-columns > * {
   --ncs-right-toc-width: 0px;
 }
-@media screen and (max-width: 999px) {
+@media screen and (max-width: 999.98px) {
   /* Stop reserving space for hidden right TOC */
   .rst-content:has(.contents.local),
   .rst-content:has(nav.contents.local) {
