@@ -272,7 +272,8 @@ kbd {
  * Structure
  ******************************************************************************/
 
- @media (min-width: 1200px) {
+ /* From 1000px the left navigation is beside the content, so the content takes the remaining width */
+ @media (min-width: 1000px) {
   .wy-grid-for-nav {
     max-width: none;   /* or max-width: none if you want full width earlier */
   }
@@ -2954,6 +2955,11 @@ nav.contents.local a.ncs-toc-active span.pre {
   line-height: normal;
   max-width:calc(100% - var(--ncs-right-toc-width) - 3rem);
 }
+/* The sticky right ToC overlaps the content below its float, so headings wrap before it */
+.rst-content:has(.contents.local) :is(h3, h4, h5, h6) {
+  max-width: calc(100% - var(--ncs-right-toc-width) - 3rem);
+  overflow-wrap: break-word;
+}
 .rst-content h2 code,
 .rst-content h2 .literal,
 .rst-content h2 span.pre {
@@ -3022,6 +3028,8 @@ span.guilabel {
   font-family: monospace, serif;
   font-weight:400;
   padding: 0px 5px;
+  /* Long names such as Kconfig options have no spaces, so they break only where they don't fit */
+  overflow-wrap: break-word;
 }
 .rst-content table.docutils td code span.pre {
   /* border: 1px solid #dae2e3 !important;*/
@@ -3521,6 +3529,17 @@ div#__kconfig-search .search-tools {
 .rst-content:has(.contents.local),
 .rst-content:has(nav.contents.local) {
   --ncs-right-toc-width: 210px;
+}
+/* These containers already keep clear of the right ToC. If their content reserved the space
+ * again, nested blocks would shrink to almost nothing when the content column is narrow.
+ */
+.rst-content .admonition > *,
+.rst-content dl dt > *,
+.rst-content dl dd > *,
+.rst-content .literal-block-wrapper > *,
+.rst-content .wy-table-responsive > *,
+.rst-content .rst-columns > * {
+  --ncs-right-toc-width: 0px;
 }
 @media screen and (max-width: 999px) {
   /* Stop reserving space for hidden right TOC */
